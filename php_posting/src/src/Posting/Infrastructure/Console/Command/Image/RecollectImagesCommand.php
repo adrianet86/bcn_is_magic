@@ -1,0 +1,39 @@
+<?php
+
+
+namespace App\Posting\Infrastructure\Console\Command\Image;
+
+
+use App\Posting\Application\Service\Image\RecollectImagesByTermRequest;
+use App\Posting\Application\Service\Image\RecollectImagesByTermService;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class RecollectImagesCommand extends Command
+{
+    private RecollectImagesByTermService $recollectImagesByTermService;
+
+    protected static $defaultName = 'recollect-images';
+
+    protected function configure()
+    {
+        $this
+            ->setDescription('Get images from a provider.')
+            ->setHelp('This command download images from providers and store them in our system');
+    }
+
+    public function __construct(RecollectImagesByTermService $recollectImagesByTermService)
+    {
+        $this->recollectImagesByTermService = $recollectImagesByTermService;
+
+        parent::__construct();
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->recollectImagesByTermService->execute(
+            new RecollectImagesByTermRequest('barcelona')
+        );
+    }
+}

@@ -1,0 +1,33 @@
+App\Domain\Image\Image:
+  type: entity
+  table: images
+  id:
+    id:
+      type: guid
+      generator:
+        strategy: NONE
+  fields:
+    createdAt:
+      type: datetime
+      column: created_at
+      nullable: false
+    providerId:
+      type: string
+      column: provider_id
+      nullable: false
+    provider:
+      type: string
+      column: provider
+      nullable: false
+    providerUrl:
+      type: string
+      column: provider_url
+      nullable: false
+    path:
+      type: string
+      column: path
+      nullable: true
+    description:
+      type: string
+      column: description
+      nullable: true

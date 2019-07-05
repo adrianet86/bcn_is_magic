@@ -1,0 +1,65 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+  UNSPLASH_SECRET_KEY: '%env(string:UNSPLASH_SECRET_KEY)%'
+  UNSPLASH_ACCESS_KEY: '%env(string:UNSPLASH_ACCESS_KEY)%'
+  UNSPLASH_APP_NAME: 'ig_posting'
+  IMAGES_PATH: '%kernel.project_dir%/var/images/'
+
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: false      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+    resource: '../src/*'
+    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+  # controllers are imported separately to make sure services can be injected
+  # as action arguments even if you don't extend any base controller class
+  App\Controller\:
+    resource: '../src/Controller'
+    tags: ['controller.service_arguments']
+
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
+
+  image_provider_unsplash:
+    public: true
+    class: App\Posting\Infrastructure\Api\Image\UnsplashImageProvider
+    arguments:
+      - '%UNSPLASH_ACCESS_KEY%'
+      - '%UNSPLASH_SECRET_KEY%'
+      - '%UNSPLASH_APP_NAME%'
+
+  image_repository:
+    public: true
+    class: App\Posting\Infrastructure\Persistance\ElasticSearch\Image\ElasticImageRepository
+
+  image_storage_file:
+    public: true
+    class: App\Posting\Infrastructure\File\Image\FileImageStorage
+    arguments:
+      - '%IMAGES_PATH%'
+
+  images_recollect_by_term_from_unsplash:
+    public: true
+    class: App\Posting\Application\Service\Image\RecollectImagesByTermService
+    arguments:
+      - '@image_repository'
+      - '@image_provider_unsplash'
+      - '@image_storage_file'
+
+  image_recollect_command:
+    public: true
+    class: App\Posting\Infrastructure\Console\Command\Image\RecollectImagesCommand
+    arguments:
+      - '@images_recollect_by_term_from_unsplash'
+    tags:
+      - { name: 'console.command', command: 'recollect-images' }

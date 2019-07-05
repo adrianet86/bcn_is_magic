@@ -1,0 +1,14 @@
+.idea
+
+db_postgres/data
+db_postgres/.idea
+
+php_posting/.idea
+php_posting/src/var/
+php_posting/src/vendor
+php_posting/src/public/bundles/
+php_posting/src/.env
+php_posting/src/.env.prod
+php_posting/src/.env.local
+php_posting/src/.env.local.php
+php_posting/src/.env.*.local

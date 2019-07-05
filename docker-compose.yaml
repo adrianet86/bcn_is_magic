@@ -1,0 +1,45 @@
+version: '3.3'
+services:
+  php_posting:
+    build:
+      context: php_posting
+      dockerfile: .docker/Dockerfile
+    image: ${PHP_IMAGE}
+    container_name: ${PHP_CONTAINER}
+#    restart: always
+    working_dir: /app
+    environment:
+      - APP_ENV=${PHP_ENVIRONMENT}
+    volumes:
+    - ./php_posting:/app
+    ports:
+    - 9000:9000
+    networks:
+    - bcnismagic_internal
+
+  db_postgres:
+    build:
+      context: db_postgres
+      dockerfile: .docker/Dockerfile
+    image: ${POSTGRES_IMAGE}
+    container_name: ${POSTGRES_CONTAINER}
+#    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: ${POSTGRES_PGDATA}
+    volumes:
+    - ./db_postgres/data:${POSTGRES_PGDATA}
+    ports:
+    - 5432:5432
+    networks:
+    - bcnismagic_internal
+    - bcnismagic_external
+
+
+networks:
+  bcnismagic_internal:
+    driver: bridge
+  bcnismagic_external:
+    external: true
