@@ -1,4 +1,5 @@
 %syntax-version=1.0.0
 %project=bcn_is_magic
 
-20190701_1 2019-07-01T07:15:50Z  <sqitch@f4735471275b> # Create image table
+20190701_1 2019-07-01T07:15:50Z   <sqitch@f4735471275b> # Create image table
+20190708_1 2019-07-07T16:15:46Z  <sqitch@d326911a1c94> # Add search terms table
