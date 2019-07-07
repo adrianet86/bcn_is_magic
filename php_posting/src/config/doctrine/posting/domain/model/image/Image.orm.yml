@@ -1,4 +1,4 @@
-App\Domain\Image\Image:
+App\Posting\Domain\Model\Image\Image:
   type: entity
   table: images
   id:

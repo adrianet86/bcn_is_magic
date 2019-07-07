@@ -36,7 +36,6 @@ class UnsplashImageConverter
             (string)$imageSource[self::DESCRIPTION],
             $imageSource[self::LIKES],
             0,
-            self::getPostedAt($imageSource),
             $author,
             self::getTags($imageSource)
         );

@@ -11,17 +11,18 @@ services:
     environment:
       - APP_ENV=${PHP_ENVIRONMENT}
     volumes:
-    - ./php_posting:/app
+    - ./php_posting/src:/app
     ports:
     - 9000:9000
     networks:
     - bcnismagic_internal
 
   db_postgres:
-    build:
-      context: db_postgres
-      dockerfile: .docker/Dockerfile
-    image: ${POSTGRES_IMAGE}
+#    build:
+#      context: db_postgres
+#      dockerfile: .docker/Dockerfile
+#    image: ${POSTGRES_IMAGE}
+    image: postgres:11.4-alpine
     container_name: ${POSTGRES_CONTAINER}
 #    restart: always
     environment:

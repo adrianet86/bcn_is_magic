@@ -4,6 +4,8 @@
 namespace App\Posting\Application\Service\Image;
 
 
+use App\Posting\Domain\Model\Image\Image;
+use App\Posting\Domain\Model\Image\ImageNotFoundException;
 use App\Posting\Domain\Model\Image\ImageProvider;
 use App\Posting\Domain\Model\Image\ImageRepository;
 use App\Posting\Domain\Model\Image\ImageStorage;
@@ -33,9 +35,14 @@ class RecollectImagesByTermService
         $images = $this->imageProvider->byTerm($request->term());
 
         if (!empty($images)) {
+            /** @var Image $image */
             foreach ($images as $image) {
-                $this->imageStorage->store($image);
-                $this->imageRepository->save($image);
+                try {
+                    $this->imageRepository->byProvider($image->provider(), $image->providerId());
+                } catch (ImageNotFoundException $exception) {
+                    $this->imageStorage->store($image);
+                    $this->imageRepository->save($image);
+                }
             }
         }
     }

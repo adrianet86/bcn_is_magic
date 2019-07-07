@@ -10,6 +10,8 @@ use App\Posting\Domain\Model\Image\ImageProvider;
 
 class UnsplashImageProvider implements ImageProvider
 {
+    const LIMIT = 50;
+
     public function __construct(string $appId, string $secretKey, string $appName)
     {
         HttpClient::init([
@@ -23,7 +25,10 @@ class UnsplashImageProvider implements ImageProvider
 
     public function byTerm(string $term): array
     {
-        $pageResult = Search::photos($term, 1, 5);
+//        $pageResult = Search::photos($term, 1, self::LIMIT);
+        $pageResult = Search::photos($term,);
+
+        $totalImages = $pageResult->getTotal();
 
         $images = [];
         if ($pageResult->getTotal() > 0) {

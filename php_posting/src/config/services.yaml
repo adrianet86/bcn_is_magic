@@ -3,11 +3,8 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-  UNSPLASH_SECRET_KEY: '%env(string:UNSPLASH_SECRET_KEY)%'
-  UNSPLASH_ACCESS_KEY: '%env(string:UNSPLASH_ACCESS_KEY)%'
-  UNSPLASH_APP_NAME: 'ig_posting'
-  IMAGES_PATH: '%kernel.project_dir%/var/images/'
+imports:
+  - { resource: parameters.yaml }
 
 services:
   # default configuration for services in *this* file
@@ -23,9 +20,9 @@ services:
 
   # controllers are imported separately to make sure services can be injected
   # as action arguments even if you don't extend any base controller class
-  App\Controller\:
-    resource: '../src/Controller'
-    tags: ['controller.service_arguments']
+#  App\Controller\:
+#    resource: '../src/Controller'
+#    tags: ['controller.service_arguments']
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
@@ -40,7 +37,9 @@ services:
 
   image_repository:
     public: true
-    class: App\Posting\Infrastructure\Persistance\ElasticSearch\Image\ElasticImageRepository
+    class: App\Posting\Infrastructure\Persistance\Doctrine\Image\DoctrineImageRepository
+    arguments:
+      - '@doctrine.orm.entity_manager'
 
   image_storage_file:
     public: true

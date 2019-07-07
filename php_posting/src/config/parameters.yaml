@@ -1,0 +1,6 @@
+parameters:
+  DB_URL: '%env(string:DB_URL)%'
+  UNSPLASH_SECRET_KEY: '%env(string:UNSPLASH_SECRET_KEY)%'
+  UNSPLASH_ACCESS_KEY: '%env(string:UNSPLASH_ACCESS_KEY)%'
+  UNSPLASH_APP_NAME: 'ig_posting'
+  IMAGES_PATH: '%kernel.project_dir%/var/images/'

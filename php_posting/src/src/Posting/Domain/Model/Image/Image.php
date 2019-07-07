@@ -13,21 +13,22 @@ class Image
     private string $providerId;
     private string $provider;
     private string $providerUrl;
-    private string $path;
-    private string $url;
+    private ?string $path;
+    private ?string $url;
 
     // METADATA
     private string $description;
     private int $likes;
     private int $numberComments;
     private string $author;
-    private int $accountFollowers;
     private array $tags;
 
     private function __construct()
     {
         $this->id = Uuid::uuid4()->toString();
         $this->createdAt = new \DateTimeImmutable();
+        $this->path = null;
+        $this->url = null;
     }
 
     public static function create(
