@@ -11,7 +11,7 @@
 
 ##### Revert
     
-    docker run --rm -ti --network bcnismagic_external -v $PWD:/app -w /app sqitch/sqitch revert --to @20181118_user_table db:pg://$DB_USER:DB_PASSWORD@DB_HOST:DB_PORT
+    docker run --rm -ti --network bcnismagic_external -v $PWD:/app -w /app sqitch/sqitch revert --to 20181118_user_table db:pg://$DB_USER:DB_PASSWORD@DB_HOST:DB_PORT
 
 ##### Add new schema
 
