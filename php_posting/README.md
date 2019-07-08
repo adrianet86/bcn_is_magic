@@ -3,9 +3,14 @@ Service to get images from different providers and store them.
 Process images to rank or discard to finally post it to IG.
 
 ### Console commands
+##### Run command
     # From /php_posting/src
     
     docker run --rm -ti --network bcnismagic_external -v $PWD:/app -w /app php php_posting php bin/console COMMAND 
+    
+##### Command list
+* recollect-images 
+* clean-images 
 
 ### Test
 #### Unit testing
