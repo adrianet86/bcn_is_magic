@@ -18,15 +18,6 @@ services:
     resource: '../src/*'
     exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-  # controllers are imported separately to make sure services can be injected
-  # as action arguments even if you don't extend any base controller class
-#  App\Controller\:
-#    resource: '../src/Controller'
-#    tags: ['controller.service_arguments']
-
-  # add more service definitions when explicit configuration is needed
-  # please note that last definitions always *replace* previous ones
-
   image_provider_unsplash:
     public: true
     class: App\Posting\Infrastructure\Api\Image\UnsplashImageProvider
@@ -46,6 +37,7 @@ services:
     class: App\Posting\Infrastructure\File\Image\FileImageStorage
     arguments:
       - '%IMAGES_PATH%'
+      - '%REMOVE_IMAGES_ENABLED%'
 
   images_recollect_by_term_from_unsplash:
     public: true
@@ -55,6 +47,14 @@ services:
       - '@image_provider_unsplash'
       - '@image_storage_file'
 
+  clean_images_service:
+    public: true
+    class: App\Posting\Application\Service\Image\CleanImagesService
+    arguments:
+      - '@image_repository'
+      - '@image_storage_file'
+      - '@tag_repository'
+
   image_recollect_command:
     public: true
     class: App\Posting\Infrastructure\Console\Command\Image\RecollectImagesCommand
@@ -62,3 +62,15 @@ services:
       - '@images_recollect_by_term_from_unsplash'
     tags:
       - { name: 'console.command', command: 'recollect-images' }
+
+  clean_images_command:
+    public: true
+    class: App\Posting\Infrastructure\Console\Command\Image\CleanImagesCommand
+    arguments:
+      - '@clean_images_service'
+    tags:
+      - { name: 'console.command', command: 'clean-images' }
+
+  tag_repository:
+    public: true
+    class: App\Posting\Infrastructure\File\Tag\FileTagRepository

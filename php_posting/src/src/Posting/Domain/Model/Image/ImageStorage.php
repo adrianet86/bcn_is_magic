@@ -9,5 +9,10 @@ interface ImageStorage
     /**
      * @param Image $image
      */
-    public function store(Image $image);
+    public function store(Image $image): void;
+
+    /**
+     * @param Image $image
+     */
+    public function remove(Image $image): void;
 }

@@ -17,7 +17,7 @@ class FileImageStorageTest extends TestCase
     public function setUp(): void
     {
         $this->path = __DIR__ . '/../../../../../../var/tmp_images/';
-        $this->fileImageStorage = new FileImageStorage($this->path);
+        $this->fileImageStorage = new FileImageStorage($this->path, true);
     }
 
     public function tearDown(): void

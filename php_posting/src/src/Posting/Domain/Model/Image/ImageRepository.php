@@ -18,4 +18,6 @@ interface ImageRepository
      * @throws ImageNotFoundException
      */
     public function byProvider(string $provider, string $providerId): Image;
+
+    public function unprocessed(int $offset = 1, $limit = 1000): array;
 }

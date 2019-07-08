@@ -47,4 +47,15 @@ class DoctrineImageRepository implements ImageRepository
 
         throw new ImageNotFoundException('IMAGE NOT FOUND FOR PROVIDER: ' . $provider . ' - ' . $providerId);
     }
+
+    public function unprocessed(int $offset = 1, $limit = 500): array
+    {
+        return $this->repository->findBy([
+            'isDiscarded' => null
+        ],
+            null,
+            $limit,
+            $offset
+        );
+    }
 }

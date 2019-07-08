@@ -68,7 +68,7 @@ class UnsplashImageConverter
         $tags = [];
         if (!empty($providerTags)) {
             foreach ($providerTags as $tag) {
-                $tags[] = $tag[self::TAG_TITLE];
+                $tags[] = trim(strtolower($tag[self::TAG_TITLE]));
             }
         }
 
