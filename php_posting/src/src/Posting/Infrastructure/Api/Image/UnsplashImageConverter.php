@@ -18,7 +18,10 @@ class UnsplashImageConverter
     const TAGS = 'tags';
     const TAG_TITLE = 'title';
     const AUTHOR = 'user';
-    const AUTHOR_NAME = 'name';
+    const NAME = 'name';
+    const VIEWS = 'views';
+    const DOWNLOADS = 'downloads';
+    const LOCATION = 'location';
 
     public static function convert($imageSource): Image
     {
@@ -27,15 +30,31 @@ class UnsplashImageConverter
         }
 
         $providerUrl = $imageSource[self::PROVIDER_URL][self::IMAGE_SIZE];
-        $author = $imageSource[self::AUTHOR][self::AUTHOR_NAME];
+        $author = $imageSource[self::AUTHOR][self::NAME];
+
+        $location = null;
+        if (isset($imageSource[self::LOCATION])) {
+            $location = $imageSource[self::LOCATION][self::NAME];
+        }
+        $views = 0;
+        if (isset($imageSource[self::VIEWS])) {
+            $views = $imageSource[self::VIEWS];
+        }
+        $downloads = 0;
+        if (isset($imageSource[self::DOWNLOADS])) {
+            $downloads = $imageSource[self::DOWNLOADS];
+        }
 
         $image = Image::create(
             $imageSource[self::PROVIDER_ID],
             self::PROVIDER,
             $providerUrl,
-            (string)$imageSource[self::DESCRIPTION],
+            self::getDescription($imageSource),
+            $location,
             $imageSource[self::LIKES],
             0,
+            $views,
+            $downloads,
             $author,
             self::getTags($imageSource)
         );
@@ -68,5 +87,18 @@ class UnsplashImageConverter
         $dateTimeImmutable = \DateTimeImmutable::createFromMutable($dateTime);
 
         return $dateTimeImmutable;
+    }
+
+    private static function getDescription(array $imageSource): ?string
+    {
+        if (isset($imageSource[self::DESCRIPTION]) && !empty($imageSource[self::DESCRIPTION])) {
+            $description = $imageSource[self::DESCRIPTION];
+            if (strlen($description) > 255) {
+                $description = substr($description, 0, 254) . PHP_EOL;
+            }
+
+            return $description;
+        }
+        return null;
     }
 }

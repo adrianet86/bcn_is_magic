@@ -4,7 +4,7 @@ This idea is based on this [read](https://medium.com/@chrisbuetti/how-i-eat-for-
 
 ### Start
 
-    docker network create bcnismagic
+    docker network create bcnismagic_external
     
     docker-compose up --build -d
     

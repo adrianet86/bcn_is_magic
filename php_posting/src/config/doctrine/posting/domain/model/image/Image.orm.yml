@@ -8,7 +8,7 @@ App\Posting\Domain\Model\Image\Image:
         strategy: NONE
   fields:
     createdAt:
-      type: datetime
+      type: datetime_immutable
       column: created_at
       nullable: false
     providerId:
@@ -30,4 +30,32 @@ App\Posting\Domain\Model\Image\Image:
     description:
       type: string
       column: description
+      nullable: true
+    location:
+      type: string
+      column: location
+      nullable: true
+    likes:
+      type: integer
+      nullable: false
+      column: likes
+    numberOfComments:
+      type: integer
+      nullable: false
+      column: number_of_comments
+    views:
+      type: integer
+      nullable: false
+      column: views
+    downloads:
+      type: integer
+      nullable: false
+      column: downloads
+    author:
+      type: string
+      column: author
+      nullable: false
+    tags:
+      type: json_array
+      column: tags
       nullable: true

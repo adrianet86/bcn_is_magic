@@ -17,10 +17,13 @@ class Image
     private ?string $url;
 
     // METADATA
-    private string $description;
+    private ?string $description;
     private int $likes;
-    private int $numberComments;
+    private int $numberOfComments;
     private string $author;
+    private ?string $location;
+    private int $views;
+    private int $downloads;
     private array $tags;
 
     private function __construct()
@@ -35,9 +38,12 @@ class Image
         string $providerId,
         string $provider,
         string $providerUrl,
-        string $description,
+        ?string $description,
+        ?string $location,
         int $likes,
-        int $numberComments,
+        int $numberOfComments,
+        ?int $views,
+        ?int $downloads,
         string $author,
         array $tags
     ): self
@@ -47,8 +53,11 @@ class Image
         $self->provider = $provider;
         $self->providerUrl = $providerUrl;
         $self->description = $description;
+        $self->location = $location;
         $self->likes = $likes;
-        $self->numberComments = $numberComments;
+        $self->numberOfComments = $numberOfComments;
+        $self->views = $views;
+        $self->downloads = $downloads;
         $self->author = $author;
         $self->tags = $tags;
 
@@ -85,7 +94,7 @@ class Image
         return $this->provider;
     }
 
-    public function description(): string
+    public function description(): ?string
     {
         return $this->description;
     }
@@ -95,9 +104,9 @@ class Image
         return $this->likes;
     }
 
-    public function numberComments(): int
+    public function numberOfComments(): int
     {
-        return $this->numberComments;
+        return $this->numberOfComments;
     }
 
     public function tags(): array
@@ -108,5 +117,20 @@ class Image
     public function author(): string
     {
         return $this->author;
+    }
+
+    public function views(): int
+    {
+        return $this->views;
+    }
+
+    public function downloads(): int
+    {
+        return $this->downloads;
+    }
+
+    public function location(): ?string
+    {
+        return $this->location;
     }
 }

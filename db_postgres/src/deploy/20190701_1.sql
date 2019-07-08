@@ -9,9 +9,12 @@ CREATE TABLE public.images(
     provider VARCHAR(150) NOT NULL,
     provider_url VARCHAR(255) NOT NULL,
     path VARCHAR(255),
-    description VARCHAR(255),
+    description VARCHAR(255) DEFAULT NULL,
+    location VARCHAR(255) DEFAULT NULL,
     likes INTEGER,
     number_of_comments INTEGER,
+    views INTEGER,
+    downloads INTEGER,
     author VARCHAR(150),
     tags JSONB
 );
