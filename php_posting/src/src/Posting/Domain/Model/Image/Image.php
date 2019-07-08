@@ -24,7 +24,7 @@ class Image
     private int $downloads;
     private array $tags;
     private ?\DateTimeImmutable $postedAt;
-    private ?bool $discarded;
+    private ?bool $isDiscarded;
     private ?string $caption;
     private ?float $rate;
 
@@ -34,6 +34,7 @@ class Image
         $this->createdAt = new \DateTimeImmutable();
         $this->path = null;
         $this->url = null;
+        $this->isDiscarded = null;
     }
 
     public static function create(
@@ -141,9 +142,9 @@ class Image
         return $this->postedAt;
     }
 
-    public function discarded(): ?bool
+    public function isDiscarded(): ?bool
     {
-        return $this->discarded;
+        return $this->isDiscarded;
     }
 
     public function caption(): ?string
@@ -154,5 +155,15 @@ class Image
     public function rate(): ?float
     {
         return $this->rate;
+    }
+
+    public function setIsDiscarded(bool $isDiscarded): void
+    {
+        $this->isDiscarded = $isDiscarded;
+    }
+
+    public function path(): ?string
+    {
+        return $this->path;
     }
 }

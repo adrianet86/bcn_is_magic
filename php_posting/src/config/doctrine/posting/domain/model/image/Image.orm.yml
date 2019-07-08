@@ -63,9 +63,10 @@ App\Posting\Domain\Model\Image\Image:
       type: datetime_immutable
       column: posted_at
       nullable: true
-    discarded:
+    isDiscarded:
       type: boolean
       nullable: true
+      collumn: is_discarded
     caption:
       type: text
       nullable: true
