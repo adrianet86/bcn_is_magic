@@ -14,9 +14,7 @@ class Image
     private string $provider;
     private string $providerUrl;
     private ?string $path;
-    private ?string $url;
-
-    // METADATA
+    private ?string $url;// TODO: delete ¿?
     private ?string $description;
     private int $likes;
     private int $numberOfComments;
@@ -25,6 +23,10 @@ class Image
     private int $views;
     private int $downloads;
     private array $tags;
+    private ?\DateTimeImmutable $postedAt;
+    private ?bool $discarded;
+    private ?string $caption;
+    private ?float $rate;
 
     private function __construct()
     {
@@ -132,5 +134,25 @@ class Image
     public function location(): ?string
     {
         return $this->location;
+    }
+
+    public function postedAt(): ?\DateTimeImmutable
+    {
+        return $this->postedAt;
+    }
+
+    public function discarded(): ?bool
+    {
+        return $this->discarded;
+    }
+
+    public function caption(): ?string
+    {
+        return $this->caption;
+    }
+
+    public function rate(): ?float
+    {
+        return $this->rate;
     }
 }

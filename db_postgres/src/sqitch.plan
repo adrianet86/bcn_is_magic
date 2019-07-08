@@ -2,4 +2,5 @@
 %project=bcn_is_magic
 
 20190701_1 2019-07-01T07:15:50Z   <sqitch@f4735471275b> # Create image table
-20190708_1 2019-07-07T16:15:46Z  <sqitch@d326911a1c94> # Add search terms table
+20190708_1 2019-07-07T16:15:46Z   <sqitch@d326911a1c94> # Add search terms table
+20190709_1 2019-07-08T15:23:01Z  <sqitch@ce9def8513f6> # Add more image fields

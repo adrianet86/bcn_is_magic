@@ -59,3 +59,17 @@ App\Posting\Domain\Model\Image\Image:
       type: json_array
       column: tags
       nullable: true
+    postedAt:
+      type: datetime_immutable
+      column: posted_at
+      nullable: true
+    discarded:
+      type: boolean
+      nullable: true
+    caption:
+      type: text
+      nullable: true
+    rate:
+      type: float
+      nullable: true
+
