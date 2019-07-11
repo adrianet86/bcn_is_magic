@@ -64,7 +64,7 @@ class ImageTest extends TestCase
         $this->assertStringContainsString($captionText, $image->caption());
     }
 
-    public function testWhenCaptionIsGeneratedItHasHashTagsWithHash()
+    public function testWhenCaptionIsGeneratedItHasTagsWithHash()
     {
         $image = Image::create(
             'providerId',
