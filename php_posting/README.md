@@ -3,6 +3,8 @@ Service to get images from different providers and store them.
 Process images to rank or discard to finally post it to IG.
 
 ### TODO:
++ Improve image cleaner
++ Add tests
 + Discard image in recollect service by aspect ratio and/or resize to desired aspect ratio.
 + Add captions in spanish and catalan.
 + Add hashtags in spanish and catalan ¿?
