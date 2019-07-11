@@ -30,6 +30,7 @@ Process images to rank or discard to finally post it to IG.
 ##### Command list
 * recollect-images 
 * clean-images 
+* post-image 
 
 ### Test
 #### Unit testing
