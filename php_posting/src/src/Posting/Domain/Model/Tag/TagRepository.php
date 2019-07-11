@@ -15,4 +15,10 @@ interface TagRepository
      * @return array Tag
      */
     public function allExcluding(): array;
+
+    /**
+     * @param int $limit
+     * @return array Tag
+     */
+    public function hashTags(int $limit = 30): array;
 }
