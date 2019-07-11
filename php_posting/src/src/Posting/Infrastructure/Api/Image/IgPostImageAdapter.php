@@ -10,7 +10,7 @@ use App\Posting\Domain\Model\Image\UnableToPostImageException;
 use InstagramAPI\Instagram;
 use InstagramAPI\Media\Photo\InstagramPhoto;
 
-class IgPostImage implements PostImage
+class IgPostImageAdapter implements PostImage
 {
     private Instagram $ig;
     private string $username;
@@ -27,6 +27,7 @@ class IgPostImage implements PostImage
         $this->password = $password;
     }
 
+    // TODO: think to remove tmpImagePath.
     public function postImage(Image $image, ?string $tmpImagePath): void
     {
         try {
@@ -39,6 +40,7 @@ class IgPostImage implements PostImage
             $photo = new InstagramPhoto($imagePath);
 
             $this->ig->timeline->uploadPhoto($photo->getFile(), ['caption' => $image->caption()]);
+            $image->posted();
 
             // Delete temporal file
             if (!is_null($tmpImagePath)) {
