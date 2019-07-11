@@ -4,10 +4,24 @@
 namespace App\Posting\Domain\Model\Image;
 
 
+use App\Posting\Domain\Model\Caption\Caption;
 use Ramsey\Uuid\Uuid;
 
 class Image
 {
+    const CAPTION_LABEL = '{CAPTION}';
+    const CAPTION_CREDIT_LABEL = '{CREDIT}';
+    const CAPTION_HASHTAGS_LABEL = '{HASTAGS}';
+    const CAPTION_TEMPLATE = self::CAPTION_LABEL . '
+.
+.
+.
+Credit: ' . self::CAPTION_CREDIT_LABEL . '
+.
+.
+.
+' . self::CAPTION_HASHTAGS_LABEL;
+
     private string $id;
     private \DateTimeImmutable $createdAt;
     private string $providerId;
@@ -165,5 +179,24 @@ class Image
     public function path(): ?string
     {
         return $this->path;
+    }
+
+    /**
+     * @param Caption $caption
+     * @param array Hashtag $hashTags
+     */
+    public function generateCaption(Caption $caption, array $tags): void
+    {
+        $hashTagsString = '';
+        if (!empty($tags)) {
+            foreach ($tags as $tag) {
+                $hashTagsString .= '#' . $tag . ' ';
+            }
+        }
+        $captionString = str_replace(self::CAPTION_LABEL, $caption->text(), self::CAPTION_TEMPLATE);
+        $captionString = str_replace(self::CAPTION_CREDIT_LABEL, $this->author, $captionString);
+        $this->caption = str_replace(self::CAPTION_HASHTAGS_LABEL, $hashTagsString, $captionString);
+
+        return;
     }
 }
