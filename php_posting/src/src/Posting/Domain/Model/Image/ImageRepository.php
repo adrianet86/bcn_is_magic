@@ -20,4 +20,17 @@ interface ImageRepository
     public function byProvider(string $provider, string $providerId): Image;
 
     public function unprocessed(int $offset = 1, $limit = 1000): array;
+
+    /**
+     * @param string $imageId
+     * @return Image
+     */
+    public function byId(string $imageId): Image;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return array Image
+     */
+    public function notPosted(int $offset = 1, int $limit = 500): array;
 }

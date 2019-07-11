@@ -58,4 +58,41 @@ class DoctrineImageRepository implements ImageRepository
             $offset
         );
     }
+
+    /**
+     * @param string $imageId
+     * @return Image
+     * @throws ImageNotFoundException
+     */
+    public function byId(string $imageId): Image
+    {
+        $entity = $this->repository->find($imageId);
+        if ($entity instanceof Image) {
+            return $entity;
+        }
+
+        throw new ImageNotFoundException('IMAGE NOT FOUND FOR ID: ' . $imageId);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return array Image
+     */
+    public function notPosted(int $offset = 1, int $limit = 500): array
+    {
+        return $this->repository->findBy(
+            [
+                'postedAt' => null,
+                'isDiscarded' => false
+            ],
+            [
+                'likes' => 'desc',
+                'views' => 'desc',
+                'downloads' => 'desc'
+            ],
+            $limit,
+            $offset
+        );
+    }
 }
