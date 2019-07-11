@@ -6,7 +6,7 @@ parameters:
   IMAGES_PATH: '%kernel.project_dir%/var/images/'
   REMOVE_IMAGES_ENABLED: '%env(bool:REMOVE_IMAGES_ENABLED)%'
   IG_CONFIG:
-    storage: file,
-    basefolder: '%kernel.project_dir%/var/ig/',
+    storage: file
+    basefolder: '%kernel.project_dir%/var/ig/'
   IG_ACCOUNT: '%env(string:IG_ACCOUNT)%'
   IG_PASSWORD: '%env(string:IG_PASSWORD)%'

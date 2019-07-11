@@ -75,12 +75,41 @@ services:
     public: true
     class: App\Posting\Infrastructure\File\Tag\FileTagRepository
 
-  ig_post_image:
+  post_image_adapter:
     public: true
-    class: App\Posting\Infrastructure\Api\Image\IgPostImage
+    class: App\Posting\Infrastructure\Api\Image\IgPostImageAdapter
     arguments:
       - '%IG_CONFIG%'
-      - '%APP_DEBUG%'
-      - '%APP_DEBUG%'
+      - '%env(APP_DEBUG)%'
+      - '%env(APP_DEBUG)%'
       - '%IG_ACCOUNT%'
       - '%IG_PASSWORD%'
+
+  caption_repository:
+    class: App\Posting\Infrastructure\File\Caption\FileCaptionRepository
+    public: true
+
+  generate_image_caption_service:
+    class: App\Posting\Application\Service\Image\GenerateImageCaptionService
+    public: true
+    arguments:
+      - '@image_repository'
+      - '@caption_repository'
+      - '@tag_repository'
+
+  post_image_service:
+    class: App\Posting\Application\Service\Image\PostImageService
+    public: true
+    arguments:
+      - '@post_image_adapter'
+      - '@image_repository'
+      - '@generate_image_caption_service'
+
+  post_image_command:
+    public: true
+    class: App\Posting\Infrastructure\Console\Command\Image\PostImageCommand
+    arguments:
+      - '@post_image_service'
+      - '@image_repository'
+    tags:
+      - { name: 'console.command', command: 'post-image' }
