@@ -5,6 +5,7 @@ namespace App\Posting\Domain\Model\Image;
 
 
 use App\Posting\Domain\Model\Caption\Caption;
+use App\Posting\Domain\Model\Tag\Tag;
 use Ramsey\Uuid\Uuid;
 
 class Image
@@ -17,6 +18,7 @@ class Image
 .
 .
 Credit: ' . self::CAPTION_CREDIT_LABEL . '
+If I owe you credit, DM me!
 .
 .
 .
@@ -183,14 +185,15 @@ Credit: ' . self::CAPTION_CREDIT_LABEL . '
 
     /**
      * @param Caption $caption
-     * @param array Hashtag $hashTags
+     * @param array Tag $hashTags
      */
     public function generateCaption(Caption $caption, array $tags): void
     {
         $hashTagsString = '';
         if (!empty($tags)) {
+            /** @var $tag Tag */
             foreach ($tags as $tag) {
-                $hashTagsString .= '#' . $tag . ' ';
+                $hashTagsString .= '#' . $tag->tag() . ' ';
             }
         }
         $captionString = str_replace(self::CAPTION_LABEL, $caption->text(), self::CAPTION_TEMPLATE);
@@ -198,5 +201,10 @@ Credit: ' . self::CAPTION_CREDIT_LABEL . '
         $this->caption = str_replace(self::CAPTION_HASHTAGS_LABEL, $hashTagsString, $captionString);
 
         return;
+    }
+
+    public function posted(): void
+    {
+        $this->postedAt = new \DateTimeImmutable();
     }
 }
