@@ -1,4 +1,5 @@
 .idea
+.env
 
 db_postgres/data
 db_postgres/.idea
