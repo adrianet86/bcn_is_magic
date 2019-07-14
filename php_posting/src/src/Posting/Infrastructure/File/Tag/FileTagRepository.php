@@ -44,9 +44,34 @@ class FileTagRepository implements TagRepository
         'photooftheday',
         'instagood',
         'travelgram',
+        'parcguell',
+        'parkguell',
+        'gaudi'
     ];
 
     private $excludingTags = [
+        'room',
+        "interior",
+        'indoor',
+        'window',
+        'old',
+        'bulbs',
+        'door',
+        'bulb',
+        'light',
+        'shabby walls',
+        'stair',
+        'granite',
+        'marble',
+        'clean',
+        'minimal',
+        'paper',
+        'people',
+        'couple',
+        'conversation',
+        'date',
+        'pair',
+        'talking',
         'portrait',
         'human',
         'person',
@@ -76,6 +101,10 @@ class FileTagRepository implements TagRepository
         'building',
         'gaudi',
         'sagrada familia',
+        'park guell',
+        'parc guell',
+        'parc güell',
+        'park güell',
     ];
 
     /**

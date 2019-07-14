@@ -31,7 +31,6 @@ class FileCaptionRepository implements CaptionRepository
         "There's no time to be bored in a world as beautiful as this.",
         "Wherever you are, be all there.",
         "Fall in love with as many things as possible.",
-        "But first, coffee.",
         "Walking through a concrete jungle.",
         "All you need is love and skylines.",
         "Bright lights, big city.",
