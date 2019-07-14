@@ -19,16 +19,17 @@ class CleanImagesServiceTest extends TestCase
 
     public function setUp(): void
     {
-//        $this->path = __DIR__ . '/../../../../../../var/tmp_images/';
-//        $this->filePath = $this->path . 'image.jpg';
-//        $image = 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80';
-//        $imageTemp = file_get_contents($image);
-//        file_put_contents($this->filePath, $imageTemp);
+        $this->path = __DIR__ . '/../../../../../../var/tmp_images/';
+        $this->filePath = $this->path . 'image.jpg';
+        $image = 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80';
+        $image = 'https://images.unsplash.com/photo-1526125377024-d9e5177b4f57?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjc5MjE4fQ';
+        $imageTemp = file_get_contents($image);
+        file_put_contents($this->filePath, $imageTemp);
     }
 
     public function tearDown(): void
     {
-//        exec('rm -rf ' . $this->path . '*');
+        exec('rm -rf ' . $this->path . '*');
     }
 
     public function testWhenItHasAnExcludingTagItIsDiscarded()
@@ -137,7 +138,7 @@ class CleanImagesServiceTest extends TestCase
 
     public function testWhenImageRatioIsWrongItIsDiscarded()
     {
-        $this->markTestSkipped('TODO');
+//        $this->markTestSkipped('TODO');
         $image = Image::create(
             'providerId',
             'provider',
@@ -151,14 +152,7 @@ class CleanImagesServiceTest extends TestCase
             'author',
             ['no_main_tag'],
             );
-        $image = $this->createMock(Image::class);
-        $image
-            ->method('path')
-            ->willReturn($this->filePath);
-        $image
-            ->expects($this->once())
-            ->method('setIsDiscarded')
-            ->with(true);
+        $image->setPath($this->filePath);
 
         $imageRepository = $this->createMock(ImageRepository::class);
         $imageRepository
@@ -172,5 +166,6 @@ class CleanImagesServiceTest extends TestCase
         );
 
         $service->execute($image);
+        $this->assertTrue($image->isDiscarded());
     }
 }

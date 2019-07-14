@@ -13,6 +13,8 @@ use App\Posting\Domain\Model\Tag\TagRepository;
 class CleanImagesService
 {
     const MAIN_TAG = 'barcelona';
+    const MAX_RATIO = 1.910;
+    const MIN_RATIO = 0.800;
 
     private ImageRepository $imageRepository;
     private ImageStorage $imageStorage;
@@ -37,7 +39,7 @@ class CleanImagesService
             if (empty($image->tags())) {
                 $image->setIsDiscarded(true);
             }
-//            $this->discardByImageRatio($image);
+            $this->discardByImageRatio($image);
             $this->discardByExcludingTags($image);
             $this->discardByRequiredTags($image);
 
@@ -85,26 +87,18 @@ class CleanImagesService
         return;
     }
 
-    private function discardByImageRatio(Image $image)
+    private function discardByImageRatio(Image $image): void
     {
-        // TODO:
         if ($image->isDiscarded() !== true) {
-//            $imageTmpt = file_get_contents($image->path());
             $imageSize = getimagesize($image->path());
             $width = $imageSize[0];
             $height = $imageSize[1];
-            $ratio = (string)($width / $height) . ":" . $this->gcd($width, $height);
-
+            $ratio = $width / $height;
+            if ($ratio < self::MIN_RATIO || $ratio > self::MAX_RATIO) {
+                $image->setIsDiscarded(true);
+                return;
+            }
         }
+        return;
     }
-
-    private function gcd(int $width, int $height)
-    {
-        if ($height == 0) {
-            return $width;
-        }
-
-        return $this->gcd($height, $width % $height);
-    }
-
 }
