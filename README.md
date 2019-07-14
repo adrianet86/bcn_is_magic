@@ -6,6 +6,10 @@ This idea is based on this [read](https://medium.com/@chrisbuetti/how-i-eat-for-
 
     docker network create bcnismagic_external
     
+    cp .env.example .env
+    
+    # Replace DB_PASSWORD value from .env file 
+    
     docker-compose up --build -d
     
     # Deploy Database
