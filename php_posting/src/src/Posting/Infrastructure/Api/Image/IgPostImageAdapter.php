@@ -8,7 +8,6 @@ use App\Posting\Domain\Model\Image\Image;
 use App\Posting\Domain\Model\Image\PostImage;
 use App\Posting\Domain\Model\Image\UnableToPostImageException;
 use InstagramAPI\Instagram;
-use InstagramAPI\Media\Photo\InstagramPhoto;
 
 class IgPostImageAdapter implements PostImage
 {
@@ -37,9 +36,8 @@ class IgPostImageAdapter implements PostImage
             }
 
             $this->ig->login($this->username, $this->password);
-            $photo = new InstagramPhoto($imagePath);
 
-            $this->ig->timeline->uploadPhoto($photo->getFile(), ['caption' => $image->caption()]);
+            $this->ig->timeline->uploadPhoto($imagePath, ['caption' => $image->caption()]);
             $image->posted();
 
             // Delete temporal file
