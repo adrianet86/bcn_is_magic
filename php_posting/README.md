@@ -18,7 +18,7 @@ Process images to rank or discard to finally post it to IG.
     + Post image.
 + Integrate more image providers. 
 + Events. 
-+ __Growing followers service!__
++ Travis CI.
 
 
 ### Console commands
