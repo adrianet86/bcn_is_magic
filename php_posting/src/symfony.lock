@@ -1,4 +1,7 @@
 {
+    "aws/aws-sdk-php": {
+        "version": "3.107.1"
+    },
     "binsoul/net-mqtt": {
         "version": "0.2.1"
     },
@@ -125,6 +128,9 @@
     },
     "mgp25/instagram-php": {
         "version": "v6.1.0"
+    },
+    "mtdowling/jmespath.php": {
+        "version": "2.4.0"
     },
     "ocramius/package-versions": {
         "version": "1.4.0"

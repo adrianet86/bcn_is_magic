@@ -3,20 +3,15 @@ Service to get images from different providers and store them.
 Process images to rank or discard to finally post it to IG.
 
 ### TODO:
-+ Improve image cleaner
-+ Add tests
 + ~~Discard image in recollect service by aspect ratio and/or resize to desired aspect ratio.~~
++ ~~Use AWS S3 to storage images.~~ 
++ Add tests
 + Add captions in spanish and catalan.
++ Improve image cleaner
++ Integrate more image providers.
++ Rate picture based on metadata and tags ¿?.
 + Add hashtags in spanish and catalan ¿?
-+ Rate picture based on metadata and tags.
 + Check existing image tags with our tags.
-+ Deploy on AWS.
-+ Use AWS S3 to storage images.
-+ Cron jobs.
-    + Recollect images.
-    + Clean images.
-    + Post image.
-+ Integrate more image providers. 
 + Events. 
 + Travis CI.
 

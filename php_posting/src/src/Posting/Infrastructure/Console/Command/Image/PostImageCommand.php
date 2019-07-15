@@ -38,9 +38,11 @@ class PostImageCommand extends Command
         $offset = 1;
         $limit = 1;
         $images = $this->imageRepository->notPosted($offset, $limit);
-        $image = $images[0];
-        $this->postImageService->execute(
-            new PostImageRequest($image->id())
-        );
+        if (!empty($images)) {
+            $image = $images[0];
+            $this->postImageService->execute(
+                new PostImageRequest($image->id())
+            );
+        }
     }
 }

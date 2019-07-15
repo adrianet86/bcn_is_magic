@@ -10,3 +10,7 @@ parameters:
     basefolder: '%kernel.project_dir%/var/ig/'
   IG_ACCOUNT: '%env(string:IG_ACCOUNT)%'
   IG_PASSWORD: '%env(string:IG_PASSWORD)%'
+  AWS_KEY: '%env(string:AWS_KEY)%'
+  AWS_SECRET: '%env(string:AWS_SECRET)%'
+  AWS_BUCKET: '%env(string:AWS_BUCKET)%'
+  AWS_REGION: '%env(string:AWS_REGION)%'

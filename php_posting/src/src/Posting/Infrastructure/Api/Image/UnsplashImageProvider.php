@@ -13,6 +13,7 @@ use GuzzleHttp\Exception\ClientException;
 class UnsplashImageProvider implements ImageProvider
 {
     const TIMEOUT = 20;
+    const WAIT = 1;
 
     private string $appId;
 
@@ -38,8 +39,8 @@ class UnsplashImageProvider implements ImageProvider
                 if ($rateLimitExceeded == false) {
                     try {
                         // Waiting to avoid API limits
-                        sleep(5);
-
+                        sleep(self::WAIT);
+                        echo "zzzZZZzzz to give some time to api zzzzZZZZZzzz\n";
                         $image = $this->getImage($imageSource['id']);
                         $images[] = UnsplashImageConverter::convert($image);
 //                        $images[] = UnsplashImageConverter::convert($imageSource);

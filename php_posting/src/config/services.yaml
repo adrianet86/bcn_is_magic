@@ -32,12 +32,22 @@ services:
     arguments:
       - '@doctrine.orm.entity_manager'
 
-  image_storage_file:
+#  image_storage_file:
+#    public: true
+#    class: App\Posting\Infrastructure\File\Image\FileImageStorage
+#    arguments:
+#      - '%IMAGES_PATH%'
+#      - '%REMOVE_IMAGES_ENABLED%'
+
+  image_storage_aws:
     public: true
-    class: App\Posting\Infrastructure\File\Image\FileImageStorage
+    class: App\Posting\Infrastructure\Api\Image\AwsImageStorage
     arguments:
+      - '%AWS_KEY%'
+      - '%AWS_SECRET%'
+      - '%AWS_BUCKET%'
+      - '%AWS_REGION%'
       - '%IMAGES_PATH%'
-      - '%REMOVE_IMAGES_ENABLED%'
 
   images_recollect_by_term_from_unsplash:
     public: true
@@ -45,14 +55,14 @@ services:
     arguments:
       - '@image_repository'
       - '@image_provider_unsplash'
-      - '@image_storage_file'
+      - '@image_storage_aws'
 
   clean_images_service:
     public: true
     class: App\Posting\Application\Service\Image\CleanImagesService
     arguments:
       - '@image_repository'
-      - '@image_storage_file'
+      - '@image_storage_aws'
       - '@tag_repository'
 
   image_recollect_command:
@@ -84,6 +94,7 @@ services:
       - '%env(APP_DEBUG)%'
       - '%IG_ACCOUNT%'
       - '%IG_PASSWORD%'
+      - '%IMAGES_PATH%'
 
   caption_repository:
     class: App\Posting\Infrastructure\File\Caption\FileCaptionRepository

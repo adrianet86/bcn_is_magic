@@ -26,3 +26,10 @@ Each service has it own documentation in a README.md file on root path.
 [DB_Postgres](/db_postgres/README.md)
 
 [PHP Posting](/php_posting/README.md)
+
+#### TODO
++ Deploy on AWS.
++ Cron jobs.
+    + Recollect images.
+    + Clean images.
+    + Post image.

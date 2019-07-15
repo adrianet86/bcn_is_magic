@@ -51,6 +51,9 @@ If I owe you credit, DM me!
         $this->path = null;
         $this->url = null;
         $this->isDiscarded = null;
+        $this->postedAt = null;
+        $this->rate = null;
+        $this->caption = null;
     }
 
     public static function create(
@@ -206,5 +209,10 @@ If I owe you credit, DM me!
     public function posted(): void
     {
         $this->postedAt = new \DateTimeImmutable();
+    }
+
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
     }
 }
