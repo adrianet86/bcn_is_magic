@@ -1,14 +1,14 @@
 # Crontab to run jobs automatically.
 
 # Recollect images every day at 00:00
-0 00 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console recollect-images >> /var/log/cron.log 2>&1
+0 00 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console recollect-images -vvv --env=prod >> /var/log/cron.log 2>&1
 
 # Clean images every day at 02:00am
-0 02 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console clean-images >> /var/log/cron.log 2>&1
+0 02 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console clean-images -vvv --env=prod >> /var/log/cron.log 2>&1
 
-# Post image every at 10.00, 16.00, 19.00 and 21
-0 10 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image >> /var/log/cron.log 2>&1
+# Post image every day at 10.00, 16.00, 19.00 and 21
+0 10 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron.log 2>&1
 
-0 16 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image >> /var/log/cron.log 2>&1
+0 16 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron.log 2>&1
 
-0 21 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image >> /var/log/cron.log 2>&1
+0 21 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron.log 2>&1
