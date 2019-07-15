@@ -1,8 +1,3 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 imports:
   - { resource: parameters.yaml }
 
@@ -32,12 +27,13 @@ services:
     arguments:
       - '@doctrine.orm.entity_manager'
 
-#  image_storage_file:
-#    public: true
-#    class: App\Posting\Infrastructure\File\Image\FileImageStorage
-#    arguments:
-#      - '%IMAGES_PATH%'
-#      - '%REMOVE_IMAGES_ENABLED%'
+  image_storage_file:
+    public: true
+    class: App\Posting\Infrastructure\File\Image\FileImageStorage
+    arguments:
+      - '%IMAGES_PATH%'
+      - '%REMOVE_IMAGES_ENABLED%'
+
 
   image_storage_aws:
     public: true
@@ -49,20 +45,28 @@ services:
       - '%AWS_REGION%'
       - '%IMAGES_PATH%'
 
+  image_storage:
+    public: true
+    class: App\Posting\Infrastructure\Api\Image\AwsImageStorageContext
+    arguments:
+      - '@image_storage_file'
+      - '@image_storage_aws'
+      - '%env(APP_ENV)%'
+
   images_recollect_by_term_from_unsplash:
     public: true
     class: App\Posting\Application\Service\Image\RecollectImagesByTermService
     arguments:
       - '@image_repository'
       - '@image_provider_unsplash'
-      - '@image_storage_aws'
+      - '@image_storage'
 
   clean_images_service:
     public: true
     class: App\Posting\Application\Service\Image\CleanImagesService
     arguments:
       - '@image_repository'
-      - '@image_storage_aws'
+      - '@image_storage'
       - '@tag_repository'
 
   image_recollect_command:

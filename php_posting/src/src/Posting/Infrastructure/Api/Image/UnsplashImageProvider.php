@@ -41,9 +41,9 @@ class UnsplashImageProvider implements ImageProvider
                         // Waiting to avoid API limits
                         sleep(self::WAIT);
                         echo "zzzZZZzzz to give some time to api zzzzZZZZZzzz\n";
-                        $image = $this->getImage($imageSource['id']);
-                        $images[] = UnsplashImageConverter::convert($image);
-//                        $images[] = UnsplashImageConverter::convert($imageSource);
+                        $images[] = UnsplashImageConverter::convert($imageSource);
+//                        $image = $this->getImage($imageSource['id']);
+//                        $images[] = UnsplashImageConverter::convert($image);
                     } catch (ClientException $exception) {
                         $rateLimitExceeded = true;
                         if ($exception->getCode() == 403) {
