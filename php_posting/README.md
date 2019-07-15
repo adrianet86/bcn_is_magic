@@ -5,14 +5,13 @@ Process images to rank or discard to finally post it to IG.
 ### TODO:
 + ~~Discard image in recollect service by aspect ratio and/or resize to desired aspect ratio.~~
 + ~~Use AWS S3 to storage images.~~ 
-+ Add tests
++ Add more unit tests and create new integration tests.
 + Add captions in spanish and catalan.
 + Add more hashtags and tags.
 + Improve image cleaner.
 + Integrate more image providers.
 + Rate picture based on metadata and tags ¿?.
 + Check existing image tags with our tags.
-+ Events. 
 + Travis CI.
 
 ### Install 
