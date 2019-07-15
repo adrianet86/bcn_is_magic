@@ -28,8 +28,11 @@ Each service has it own documentation in a README.md file on root path.
 [PHP Posting](/php_posting/README.md)
 
 #### TODO
-+ Deploy on AWS.
-+ Cron jobs.
-    + Recollect images.
-    + Clean images.
-    + Post image.
++ ~~Deploy on AWS.~~
++ ~~Cron jobs.~~
+    + ~~Recollect images.~~
+    + ~~Clean images.~~
+    + ~~Post image.~~
++ Automatic deploy on AWS on github master branch change.
+* AWS VPN server to connect to DB.
+* Documentation AWS steps.

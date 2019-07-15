@@ -7,10 +7,10 @@ Process images to rank or discard to finally post it to IG.
 + ~~Use AWS S3 to storage images.~~ 
 + Add tests
 + Add captions in spanish and catalan.
-+ Improve image cleaner
++ Add more hashtags and tags.
++ Improve image cleaner.
 + Integrate more image providers.
 + Rate picture based on metadata and tags ¿?.
-+ Add hashtags in spanish and catalan ¿?
 + Check existing image tags with our tags.
 + Events. 
 + Travis CI.
