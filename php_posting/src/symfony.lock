@@ -93,9 +93,6 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "elasticsearch/elasticsearch": {
-        "version": "v7.0.1"
-    },
     "evenement/evenement": {
         "version": "v3.0.1"
     },
@@ -107,12 +104,6 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.6.0"
-    },
-    "guzzlehttp/ringphp": {
-        "version": "1.1.1"
-    },
-    "guzzlehttp/streams": {
-        "version": "3.0.0"
     },
     "hughbertd/oauth2-unsplash": {
         "version": "1.0.3"
