@@ -5,7 +5,7 @@ Process images to rank or discard to finally post it to IG.
 ### TODO:
 + Improve image cleaner
 + Add tests
-+ Discard image in recollect service by aspect ratio and/or resize to desired aspect ratio.
++ ~~Discard image in recollect service by aspect ratio and/or resize to desired aspect ratio.~~
 + Add captions in spanish and catalan.
 + Add hashtags in spanish and catalan ¿?
 + Rate picture based on metadata and tags.
@@ -20,12 +20,16 @@ Process images to rank or discard to finally post it to IG.
 + Events. 
 + Travis CI.
 
+### Install 
+    # From /php_posting/src
+        
+    docker run --rm -ti -v $PWD:/app -w /app composer composer install --ignore-platform-reqs
 
 ### Console commands
 ##### Run command
     # From /php_posting/src
     
-    docker run --rm -ti --network bcnismagic_external -v $PWD:/app -w /app php php_posting php bin/console COMMAND 
+    docker run --rm -ti --network bcnismagic_external -v $PWD:/app -w /app php_posting php bin/console COMMAND 
     
 ##### Command list
 * recollect-images 

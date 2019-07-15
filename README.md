@@ -14,7 +14,11 @@ This idea is based on this [read](https://medium.com/@chrisbuetti/how-i-eat-for-
     
     # Deploy Database
 
-    docker run --rm -ti --network bcnismagic_external -v $PWD/db_postgres:/app -w /app sqitch/sqitch deploy db:pg://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_CONTAINER:5432/$POSTGRES_DB
+    docker run --rm -ti --network bcnismagic_external -v $PWD/db_postgres/src:/app -w /app sqitch/sqitch deploy db:pg://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_CONTAINER:5432/$POSTGRES_DB
+    
+    # Install libraries php_posting service
+    
+    docker run --rm -ti -v $PWD/php_posting/src:/app -w /app composer composer install --ignore-platform-reqs
 
 #### Documentation
 Each service has it own documentation in a README.md file on root path.
