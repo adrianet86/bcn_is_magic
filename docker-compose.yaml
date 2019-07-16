@@ -38,6 +38,29 @@ services:
     - bcnismagic_internal
     - bcnismagic_external
 
+  search_elasticsearch:
+#    build:
+#      context: search_elasticsearch
+#      dockerfile: .docker/Dockerfile
+#    image: ${ELASTICSEARCH_IMAGE}
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: ${ELASTICSEARCH_CONTAINER}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - bcnismagic_internal
+      - bcnismagic_external
+
+volumes:
+  esdata:
+    driver: local
+
 
 networks:
   bcnismagic_internal:
