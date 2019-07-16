@@ -12,11 +12,12 @@ https://docs.docker.com/install/linux/linux-postinstall/
 sudo usermod -aG docker $USER
 restart instance to see changes
 
-
 Clone on /home/ubuntu the project
 git clone https://github.com/adrianet86/bcn_is_magic.git
 
 Follow installation instructions from README files.
+
+Add alias for composer and php_posting docker images to .bashrc
 
 Change timezone
 sudo timedatectl set-timezone Europe/Madrid
