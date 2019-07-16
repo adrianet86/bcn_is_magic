@@ -4,8 +4,8 @@ services:
     build:
       context: php_posting
       dockerfile: .docker/Dockerfile
-    image: ${PHP_IMAGE}
-    container_name: ${PHP_CONTAINER}
+    image: ${PHP_POSTING_IMAGE}
+    container_name: ${PHP_POSTING_CONTAINER}
 #    restart: always
     working_dir: /app
     environment:
@@ -16,6 +16,23 @@ services:
     - 9000:9000
     networks:
     - bcnismagic_internal
+
+  php_following:
+    build:
+      context: php_following
+      dockerfile: .docker/Dockerfile
+    image: ${PHP_FOLLOWING_IMAGE}
+    container_name: ${PHP_FOLLOWING_CONTAINER}
+#    restart: always
+    working_dir: /app
+    environment:
+      - APP_ENV=${PHP_ENVIRONMENT}
+    volumes:
+      - ./php_following/src:/app
+    ports:
+      - 9001:9000
+    networks:
+      - bcnismagic_internal
 
   db_postgres:
 #    build:
