@@ -31,6 +31,11 @@ class CleanImagesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $dt = new \DateTime("now", new \DateTimeZone('Europe/Madrid'));
+        $output->writeln('START - ' . strtoupper(self::$defaultName) . ': ' . $dt->format('Y-m-d H:i:s'));
+        $time = microtime(true);
         $this->cleanImagesService->execute(null);
+
+        $output->writeln('FINISH - ' . strtoupper(self::$defaultName) . ': ' . (string)(microtime(true) - $time));
     }
 }

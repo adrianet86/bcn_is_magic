@@ -35,6 +35,10 @@ class PostImageCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $dt = new \DateTime("now", new \DateTimeZone('Europe/Madrid'));
+        $output->writeln('START - ' . strtoupper(self::$defaultName) . ': ' . $dt->format('Y-m-d H:i:s'));
+        $time = microtime(true);
+
         $offset = 1;
         $limit = 1;
         $images = $this->imageRepository->notPosted($offset, $limit);
@@ -44,5 +48,7 @@ class PostImageCommand extends Command
                 new PostImageRequest($image->id())
             );
         }
+
+        $output->writeln('FINISH - ' . strtoupper(self::$defaultName) . ': ' . (string)(microtime(true) - $time));
     }
 }

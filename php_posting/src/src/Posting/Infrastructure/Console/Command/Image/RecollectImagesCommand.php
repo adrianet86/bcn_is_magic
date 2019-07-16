@@ -32,8 +32,14 @@ class RecollectImagesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $dt = new \DateTime("now", new \DateTimeZone('Europe/Madrid'));
+        $output->writeln('START - ' . strtoupper(self::$defaultName) . ': ' . $dt->format('Y-m-d H:i:s'));
+        $time = microtime(true);
+
         $this->recollectImagesByTermService->execute(
             new RecollectImagesByTermRequest('barcelona')
         );
+
+        $output->writeln('FINISH - ' . strtoupper(self::$defaultName) . ': ' . (string)(microtime(true) - $time));
     }
 }
