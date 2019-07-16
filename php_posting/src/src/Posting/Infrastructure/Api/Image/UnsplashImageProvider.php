@@ -23,7 +23,6 @@ class UnsplashImageProvider implements ImageProvider
         HttpClient::init([
             'applicationId' => $appId,
             'secret' => $secretKey,
-//            'callbackUrl'	=> 'https://your-application.com/oauth/callback',
             'callbackUrl' => 'urn:ietf:wg:oauth:2.0:oob',
             'utmSource' => $appName
         ]);
@@ -34,22 +33,20 @@ class UnsplashImageProvider implements ImageProvider
         $pageResult = Search::photos($term, $page, $limit);
         $images = [];
         $rateLimitExceeded = false;
-        if ($pageResult->getResults() > 0) {
+        if ($pageResult->getTotal() > 0) {
             foreach ($pageResult->getResults() as $imageSource) {
                 if ($rateLimitExceeded == false) {
                     try {
-                        // Waiting to avoid API limits
-                        sleep(self::WAIT);
-                        echo "zzzZZZzzz to give some time to api zzzzZZZZZzzz\n";
-                        $images[] = UnsplashImageConverter::convert($imageSource);
-//                        $image = $this->getImage($imageSource['id']);
-//                        $images[] = UnsplashImageConverter::convert($image);
+                        $image = $this->getImage($imageSource['id']);
+                        $images[] = UnsplashImageConverter::convert($image);
                     } catch (ClientException $exception) {
                         $rateLimitExceeded = true;
                         if ($exception->getCode() == 403) {
                             $images[] = UnsplashImageConverter::convert($imageSource);
                         }
                     }
+                } else {
+                    $images[] = UnsplashImageConverter::convert($imageSource);
                 }
             }
         }
