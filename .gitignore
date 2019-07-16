@@ -13,3 +13,12 @@ php_posting/src/.env.prod
 php_posting/src/.env.local
 php_posting/src/.env.local.php
 php_posting/src/.env.*.local
+
+php_following/src/var/
+php_following/src/vendor
+php_following/src/public/bundles/
+php_following/src/.env
+php_following/src/.env.prod
+php_following/src/.env.local
+php_following/src/.env.local.php
+php_following/src/.env.*.local
