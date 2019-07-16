@@ -32,6 +32,7 @@ services:
       PGDATA: ${POSTGRES_PGDATA}
     volumes:
     - ./db_postgres/data:${POSTGRES_PGDATA}
+#    - postgres_data:${POSTGRES_PGDATA}
     ports:
     - 5432:5432
     networks:
@@ -50,17 +51,19 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - ./search_elasticsearch/data:${ELASTICSEARCH_DATA}
+#      - elasticsearch_data:${ELASTICSEARCH_DATA}
     ports:
       - 9200:9200
     networks:
       - bcnismagic_internal
       - bcnismagic_external
 
-volumes:
-  esdata:
-    driver: local
-
+#volumes:
+#  elasticsearch_data:
+#    driver: local
+#  postgres_data:
+#    driver: local
 
 networks:
   bcnismagic_internal:
