@@ -44,6 +44,7 @@ services:
       - '%AWS_BUCKET%'
       - '%AWS_REGION%'
       - '%IMAGES_PATH%'
+      - '%REMOVE_IMAGES_ENABLED%'
 
   image_storage:
     public: true

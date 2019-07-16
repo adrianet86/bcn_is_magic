@@ -215,4 +215,9 @@ If I owe you credit, DM me!
     {
         $this->url = $url;
     }
+
+    public function removePath(): void
+    {
+        $this->path = null;
+    }
 }

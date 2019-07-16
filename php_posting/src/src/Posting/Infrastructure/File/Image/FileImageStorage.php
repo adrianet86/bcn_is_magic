@@ -49,6 +49,7 @@ class FileImageStorage implements ImageStorage
     {
         if ($this->removeImages && !is_null($image->path())) {
             unlink($image->path());
+            $image->removePath();
         }
 
         return;

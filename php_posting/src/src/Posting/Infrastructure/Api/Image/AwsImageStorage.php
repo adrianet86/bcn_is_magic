@@ -17,13 +17,15 @@ class AwsImageStorage implements ImageStorage
     private string $secret;
     private string $region;
     private string $tmpPath;
+    private bool $removeImages;
 
     public function __construct(
         string $key,
         string $secret,
         string $bucket,
         string $region,
-        string $tmpPath
+        string $tmpPath,
+        bool $removeImages
     )
     {
         $this->key = $key;
@@ -31,6 +33,7 @@ class AwsImageStorage implements ImageStorage
         $this->bucket = $bucket;
         $this->region = $region;
         $this->tmpPath = $tmpPath;
+        $this->removeImages = $removeImages;
 
         // Instantiate an Amazon S3 client.
         $this->s3 = new S3Client([
@@ -78,9 +81,12 @@ class AwsImageStorage implements ImageStorage
      */
     public function remove(Image $image): void
     {
-        $this->s3->deleteObject([
-            'Bucket' => $this->bucket,
-            'Key' => $image->path()
-        ]);
+        if ($this->removeImages && !is_null($image->path())) {
+            $this->s3->deleteObject([
+                'Bucket' => $this->bucket,
+                'Key' => $image->path()
+            ]);
+            $image->removePath();
+        }
     }
 }
