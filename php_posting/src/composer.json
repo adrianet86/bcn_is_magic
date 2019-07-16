@@ -21,10 +21,16 @@
     "symfony/framework-bundle": "4.3.*",
     "symfony/orm-pack": "^1.0",
     "symfony/yaml": "4.3.*",
-    "unsplash/unsplash": "^2.4"
+    "unsplash/unsplash": "^2.4",
+    "guzzlehttp/guzzle": "^6.3",
+    "aws/aws-sdk-php": "^3.107",
+    "mgp25/instagram-php": "^6.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.2"
+    "phpunit/phpunit": "^8.2",
+    "symfony/debug-pack": "*",
+    "symfony/profiler-pack": "*",
+    "symfony/test-pack": "*"
   },
   "config": {
     "preferred-install": {

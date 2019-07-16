@@ -43,6 +43,7 @@ class RecollectImagesByTermService
                 /** @var Image $image */
                 foreach ($images as $image) {
                     try {
+                        // TODO: update if exists.
                         $this->imageRepository->byProvider($image->provider(), $image->providerId());
                     } catch (ImageNotFoundException $exception) {
                         $this->imageStorage->store($image);
