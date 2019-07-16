@@ -19,6 +19,14 @@ Process images to rank or discard to finally post it to IG.
         
     docker run --rm -ti -v $PWD:/app -w /app composer composer install --ignore-platform-reqs
 
+### Config
+    # From /php_posting/src
+    # Create new environment files and replace value of vars
+    
+    cp .env.example .env
+    
+    cp .env.dev .env.prod
+
 ### Console commands
 ##### Run command
     # From /php_posting/src
