@@ -35,10 +35,6 @@ services:
       - bcnismagic_internal
 
   db_postgres:
-#    build:
-#      context: db_postgres
-#      dockerfile: .docker/Dockerfile
-#    image: ${POSTGRES_IMAGE}
     image: postgres:11.4-alpine
     container_name: ${POSTGRES_CONTAINER}
 #    restart: always
@@ -57,12 +53,8 @@ services:
     - bcnismagic_external
 
   search_following:
-#    build:
-#      context: search_following
-#      dockerfile: .docker/Dockerfile
-#    image: ${ELASTICSEARCH_IMAGE}
     image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
-    container_name: ${ELASTICSEARCH_CONTAINER}
+    container_name: ${SEARCH_FOLLOWING_CONTAINER}
     environment:
       - discovery.type=single-node
     ulimits:
@@ -70,8 +62,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./search_following/data:${ELASTICSEARCH_DATA}
-#      - elasticsearch_data:${ELASTICSEARCH_DATA}
+      - ./search_following/data:${SEARCH_FOLLOWING_DATA}
+#      - elasticsearch_data:${SEARCH_FOLLOWING_DATA}
     ports:
       - 9200:9200
     networks:
