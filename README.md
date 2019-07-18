@@ -1,5 +1,6 @@
 # Barcelona is magic
-Project to post automatic content to an Instagram account.
+Project to post automatic content to an Instagram account and grow the followers.
+
 This idea is based on this [read](https://medium.com/@chrisbuetti/how-i-eat-for-free-in-nyc-using-python-automation-artificial-intelligence-and-instagram-a5ed8a1e2a10), I recommend it ;)
 
 ### Start
@@ -8,7 +9,7 @@ This idea is based on this [read](https://medium.com/@chrisbuetti/how-i-eat-for-
     
     cp .env.example .env
     
-    # Replace DB_PASSWORD value from .env file 
+    # Replace DB_POSTING_PASSWORD value from .env file 
     
     docker-compose up --build -d
     
