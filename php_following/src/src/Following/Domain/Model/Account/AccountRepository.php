@@ -6,6 +6,10 @@ namespace App\Following\Domain\Model\Account;
 
 interface AccountRepository
 {
+    /**
+     * @param Account $account
+     * @throws AccountExistsWithSameUsernameException
+     */
     public function store(Account $account): void;
 
     /**

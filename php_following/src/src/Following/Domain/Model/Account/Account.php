@@ -4,15 +4,19 @@
 namespace App\Following\Domain\Model\Account;
 
 
+use Elastica\Document;
 use Ramsey\Uuid\Uuid;
 
 class Account
 {
     private string $id;
-    private int $followBack;
     private string $fromAccount;
     private string $fromMethod;
     private \DateTimeImmutable $createdAt;
+    private ?\DateTime $followingRequestedAt;
+    private ?int $followBack;
+    private ?\DateTime $updatedAt;
+
     // IG info
     private string $instagramId;
     private string $username;
@@ -28,6 +32,8 @@ class Account
     private $gender;// TODO: find a way to predict gender
 
     private function __construct(
+        ?string $id,
+        ?\DateTimeImmutable $createdAt,
         string $fromAccount,
         string $fromMethod,
         string $instagramId,
@@ -42,8 +48,18 @@ class Account
         int $mediaCount
     )
     {
-        $this->id = Uuid::uuid4()->toString();
-        $this->createdAt = new \DateTimeImmutable();
+        // TODO: find a better way
+        if (is_null($id)) {
+            $this->id = Uuid::uuid4()->toString();
+        } else {
+            $this->id = $id;
+        }
+        if (is_null($createdAt)) {
+            $this->createdAt = new \DateTimeImmutable();
+        } else {
+            $this->createdAt = $createdAt;
+        }
+
         $this->fromAccount = $fromAccount;
         $this->fromMethod = $fromMethod;
         $this->instagramId = $instagramId;
@@ -56,6 +72,9 @@ class Account
         $this->following = $following;
         $this->biography = $biography;
         $this->mediaCount = $mediaCount;
+        $this->followBack = null;
+        $this->followingRequestedAt = null;
+        $this->updatedAt = null;
     }
 
     public static function create(
@@ -74,6 +93,8 @@ class Account
     ): self
     {
         return new self(
+            null,
+            null,
             $fromAccount,
             $fromMethod,
             $instagramId,
@@ -89,6 +110,37 @@ class Account
         );
     }
 
+    public static function createFromEsDocument(Document $document): self
+    {
+        $data = $document->getData();
+
+        $self = new self(
+            $data['id'],
+            new \DateTimeImmutable($data['created_at']),
+            $data['from_account'],
+            $data['from_method'],
+            $data['instagram_id'],
+            $data['username'],
+            $data['name'],
+            $data['is_private'],
+            $data['has_profile_picture'],
+            $data['is_business'],
+            $data['followers'],
+            $data['following'],
+            $data['biography'],
+            $data['media_count']
+        );
+        $self->followBack = $data['follow_back'];
+        if (!is_null($data['following_requested_at'])) {
+            $self->followingRequestedAt = new \DateTime($data['following_requested_at']);
+        }
+        if (!is_null($data['updated_at'])) {
+            $self->updatedAt = new \DateTime($data['updated_at']);
+        }
+
+        return $self;
+    }
+
     public function id(): string
     {
         return $this->id;
@@ -99,12 +151,12 @@ class Account
         return $this->followBack;
     }
 
-    public function fromAccount()
+    public function fromAccount(): string
     {
         return $this->fromAccount;
     }
 
-    public function fromMethod()
+    public function fromMethod(): string
     {
         return $this->fromMethod;
     }
@@ -119,47 +171,47 @@ class Account
         return $this->instagramId;
     }
 
-    public function username()
+    public function username(): string
     {
         return $this->username;
     }
 
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function isPrivate()
+    public function isPrivate(): bool
     {
         return $this->isPrivate;
     }
 
-    public function hasProfilePicture()
+    public function hasProfilePicture(): bool
     {
         return $this->hasProfilePicture;
     }
 
-    public function isBusiness()
+    public function isBusiness(): bool
     {
         return $this->isBusiness;
     }
 
-    public function followers()
+    public function followers(): int
     {
         return $this->followers;
     }
 
-    public function following()
+    public function following(): int
     {
         return $this->following;
     }
 
-    public function biography()
+    public function biography(): ?string
     {
         return $this->biography;
     }
 
-    public function mediaCount()
+    public function mediaCount(): int
     {
         return $this->mediaCount;
     }
@@ -174,43 +226,35 @@ class Account
         return $this->gender;
     }
 
-    public function setName(string $name)
+    public function followingRequestedAt(): ?\DateTime
+    {
+        return $this->followingRequestedAt;
+    }
+
+    public function updateIgInfo(
+        string $name,
+        bool $isPrivate,
+        bool $hasProfilePicture,
+        bool $isBusiness,
+        int $followers,
+        int $following,
+        ?string $biography,
+        int $mediaCount
+    )
     {
         $this->name = $name;
-    }
-
-    public function setIsPrivate(bool $isPrivate)
-    {
         $this->isPrivate = $isPrivate;
-    }
-
-    public function setHasProfilePicture(bool $hasProfilePicture)
-    {
-        $this->hasProfilePicture = $hasProfilePicture;
-    }
-
-    public function setIsBusiness(bool $isBusiness)
-    {
         $this->isBusiness = $isBusiness;
-    }
-
-    public function setFollowers(int $followers)
-    {
-        $this->followers = $followers;
-    }
-
-    public function setFollowing(int $following)
-    {
+        $this->hasProfilePicture = $hasProfilePicture;
         $this->following = $following;
-    }
-
-    public function setBiography(string $biography)
-    {
+        $this->followers = $followers;
         $this->biography = $biography;
+        $this->mediaCount = $mediaCount;
+        $this->updatedAt = new \DateTime();
     }
 
-    public function setMediaCount(int $mediaCount)
+    public function updatedAt(): ?\DateTime
     {
-        $this->mediaCount = $mediaCount;
+        return $this->updatedAt;
     }
 }

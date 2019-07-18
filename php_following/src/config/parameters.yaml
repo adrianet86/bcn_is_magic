@@ -1,0 +1,8 @@
+parameters:
+  ELASTICSEARCH_HOST: '%env(string:ELASTICSEARCH_HOST)%'
+  ELASTICSEARCH_PORT: '%env(int:ELASTICSEARCH_PORT)%'
+  IG_CONFIG:
+    storage: file
+    basefolder: '%kernel.project_dir%/var/ig/'
+  IG_ACCOUNT: '%env(string:IG_ACCOUNT)%'
+  IG_PASSWORD: '%env(string:IG_PASSWORD)%'
