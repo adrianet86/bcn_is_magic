@@ -13,7 +13,7 @@ use GuzzleHttp\Exception\ClientException;
 class UnsplashImageProvider implements ImageProvider
 {
     const TIMEOUT = 20;
-    const WAIT = 1;
+    const WAIT = 2;
 
     private string $appId;
 
@@ -48,6 +48,8 @@ class UnsplashImageProvider implements ImageProvider
                 } else {
                     $images[] = UnsplashImageConverter::convert($imageSource);
                 }
+                echo "zzZZZZZZzzzz sleep to give rest to api zzzzzZZZZZZzzzz\n";
+                sleep(self::WAIT);
             }
         }
 
