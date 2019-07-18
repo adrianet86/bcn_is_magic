@@ -34,12 +34,17 @@ Each service has it own documentation in a README.md file on root path.
 
 [PHP Posting](/php_posting/README.md)
 
+[PHP Following](/php_following/README.md)
+
 #### TODO
 + ~~Deploy on AWS.~~
-+ ~~Cron jobs.~~
++ Cron jobs.
     + ~~Recollect images.~~
     + ~~Clean images.~~
     + ~~Post image.~~
+    + Recollect accounts.
+* ~~Rename service search_elasticsearch to search_following~~    
++ Rename service db_postgres to db_posting 
 + Automatic deploy on AWS on github master branch change.
 * AWS VPN server to connect to DB.
 * Documentation AWS steps.
