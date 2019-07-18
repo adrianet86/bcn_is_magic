@@ -5,7 +5,7 @@
     docker run --rm -ti -v ~/projects/devops/postgres/src:/app -w /app sqitch/sqitch --engine pg init devops
 
 ##### Deploy 
-    # From /db_postgres/src
+    # From /db_posting/src
     
     docker run --rm -ti --network bcnismagic_external -v $PWD:/app -w /app sqitch/sqitch deploy db:pg://$DB_USER:DB_PASSWORD@DB_HOST:DB_PORT
 

@@ -1,8 +1,8 @@
 .idea
 .env
 
-db_postgres/data
-db_postgres/.idea
+db_posting/data
+db_posting/.idea
 
 php_posting/.idea
 php_posting/src/var/

@@ -34,18 +34,18 @@ services:
     networks:
       - bcnismagic_internal
 
-  db_postgres:
+  db_posting:
     image: postgres:11.4-alpine
-    container_name: ${POSTGRES_CONTAINER}
+    container_name: ${DB_POSTING_CONTAINER}
 #    restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PGDATA: ${POSTGRES_PGDATA}
+      POSTGRES_DB: ${DB_POSTING_DB}
+      POSTGRES_USER: ${DB_POSTING_USER}
+      POSTGRES_PASSWORD: ${DB_POSTING_PASSWORD}
+      PGDATA: ${DB_POSTING_PGDATA}
     volumes:
-    - ./db_postgres/data:${POSTGRES_PGDATA}
-#    - postgres_data:${POSTGRES_PGDATA}
+    - ./db_posting/data:${DB_POSTING_PGDATA}
+#    - postgres_data:${DB_POSTING_PGDATA}
     ports:
     - 5432:5432
     networks:
