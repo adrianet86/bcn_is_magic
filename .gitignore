@@ -22,3 +22,6 @@ php_following/src/.env.prod
 php_following/src/.env.local
 php_following/src/.env.local.php
 php_following/src/.env.*.local
+
+search_following/data
+!search_following/data/.gitignore
