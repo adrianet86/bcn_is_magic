@@ -1,0 +1,5 @@
+# Crontab to run jobs automatically.
+
+# Recollect accounts every day at 01:00am
+0 1 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console recollect-accounts -vvv --env=prod >> /var/log/cron_recollect_accounts.log 2>&1
+
