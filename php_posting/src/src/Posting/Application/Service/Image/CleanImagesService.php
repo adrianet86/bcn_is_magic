@@ -89,7 +89,7 @@ class CleanImagesService
 
     private function discardByImageRatio(Image $image): void
     {
-        if ($image->isDiscarded() !== true) {
+        if ($image->isDiscarded() !== true && !is_null($image->path())) {
             $imageSize = getimagesize($image->path());
             $width = $imageSize[0];
             $height = $imageSize[1];
