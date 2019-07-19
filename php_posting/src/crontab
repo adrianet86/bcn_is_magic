@@ -1,10 +1,10 @@
 # Crontab to run jobs automatically.
 
-# Recollect images every day at 09:00am
-0 9 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console recollect-images -vvv --env=prod >> /var/log/cron_recollect_images.log 2>&1
+# Recollect images every 5 days at 09:00am
+0 9 */5 * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console recollect-images -vvv --env=prod >> /var/log/cron_recollect_images.log 2>&1
 
-# Clean images every day at 11:00am
-0 11 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console clean-images -vvv --env=prod >> /var/log/cron_clean_images.log 2>&1
+# Clean images every 5 days at 11:00am
+0 11 */5 * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console clean-images -vvv --env=prod >> /var/log/cron_clean_images.log 2>&1
 
 # Post image every day at 08:45, 14:00, 19:30 and 21:30
 45 8 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1

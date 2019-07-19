@@ -218,7 +218,10 @@ class Account
 
     public function followerRatio()
     {
-        return $this->following / $this->followers;
+        if ($this->following !== 0 && $this->followers !== 0) {
+            return $this->followers / $this->following;
+        }
+        return 0;
     }
 
     public function gender()
@@ -256,5 +259,24 @@ class Account
     public function updatedAt(): ?\DateTime
     {
         return $this->updatedAt;
+    }
+
+    public function followingRating(): float
+    {
+        $rate = 0;
+        if ($this->isPrivate === true) {
+            $rate += 0.1;
+        }
+        if ($this->hasProfilePicture === true) {
+            $rate += 0.1;
+        }
+        if ($this->followerRatio() > 1) {
+            $rate += $this->followerRatio() / 10;
+        }
+        if ($this->gender === 'female') {
+            $rate += 0.1;
+        }
+
+        return $rate;
     }
 }

@@ -19,21 +19,24 @@ class ElasticAccountRepository implements AccountRepository
     private Client $client;
     /** @var Index $index */
     private Index $index;
-
+    /** @var \Elastica\Type */
+    private $type;
 
     public function __construct(Client $client, string $indexName)
     {
         $this->client = $client;
         $this->index = $this->client->getIndex($indexName);
-
         if (!$this->index->exists()) {
             $this->index->create([
-                "settings" => [
-                    "number_of_shards" => 3,
-                    "number_of_replicas" => 2
+                    "settings" => [
+                        "number_of_shards" => 3,
+                        "number_of_replicas" => 2
+                    ],
+                    "type" => "account"
                 ]
-            ]);
+            );
         }
+        $this->type = $this->index->getType('account');
     }
 
     private function transformToDocument(Account $account): Document
@@ -57,6 +60,7 @@ class ElasticAccountRepository implements AccountRepository
                 'from_account' => $account->fromAccount(),
                 'from_method' => $account->fromMethod(),
                 'follow_back' => $account->followBack(),
+                'following_rating' => $account->followingRating(),
                 'following_requested_at' => !is_null($account->followingRequestedAt())
                     ? $account->followingRequestedAt()->format('Y-m-d H:i:s')
                     : null,
@@ -77,7 +81,8 @@ class ElasticAccountRepository implements AccountRepository
 
         $document = $this->transformToDocument($account);
 
-        $this->index->addDocuments([$document]);
+//        $this->index->addDocuments([$document]);
+        $this->type->addDocuments([$document]);
         $this->index->flush();
         $this->index->refresh();
     }
@@ -97,7 +102,7 @@ class ElasticAccountRepository implements AccountRepository
 
 //        var_dump(json_encode($boolQuery->toArray()));
 
-        $result = $this->index->search($boolQuery);
+        $result = $this->type->search($boolQuery);
         $documents = $result->getDocuments();
         if (empty($documents)) {
             throw new AccountNotFoundException('ACCOUNT NOT FOUND FOR USERNAME: ' . $username);

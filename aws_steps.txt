@@ -25,4 +25,11 @@ sudo timedatectl set-timezone Europe/Madrid
 Add cron jobs to crontab, copy content from /home/ubuntu/bcn_is_magic/php_posting/src/crontab
 sudo crontab -e
 
+Change system settings to make work Elasticsearch - (it will not work with free tier AWS version)
+https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+
+Add cron jobs to crontab, copy content from /home/ubuntu/bcn_is_magic/php_following/src/crontab
+sudo crontab -e
+
+Create ElasticSearch service free tier and change php_following settings
 

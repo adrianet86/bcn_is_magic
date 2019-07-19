@@ -31,6 +31,24 @@ class RecollectAccountsFromFollowersService
      */
     public function execute($request)
     {
+        $this->accountRepository->store(
+            $account = Account::create(
+                'from',
+                'method',
+                'id',
+                'username',
+                'name',
+                true,
+                false,
+                false,
+                0,
+                0,
+                'hi',
+                0
+            )
+        );
+
+        die;
         $accountUsername = $request->accountUsername();
 
         $total = $this->accountProvider->totalByAccountFollowers($accountUsername) + self::GAP;
