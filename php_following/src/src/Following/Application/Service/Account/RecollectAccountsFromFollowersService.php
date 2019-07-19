@@ -48,7 +48,6 @@ class RecollectAccountsFromFollowersService
             )
         );
 
-        die;
         $accountUsername = $request->accountUsername();
 
         $total = $this->accountProvider->totalByAccountFollowers($accountUsername) + self::GAP;
