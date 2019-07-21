@@ -18,4 +18,10 @@ interface AccountRepository
      * @throws AccountNotFoundException
      */
     public function byUsername(string $username): Account;
+
+    /**
+     * @param int $size
+     * @return array
+     */
+    public function accountsToFollowOrderedByRating(int $size = 400): array;
 }

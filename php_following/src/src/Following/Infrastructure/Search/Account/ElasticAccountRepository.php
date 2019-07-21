@@ -12,6 +12,8 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Index;
 use Elastica\Query;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Exists;
 
 class ElasticAccountRepository implements AccountRepository
 {
@@ -61,6 +63,7 @@ class ElasticAccountRepository implements AccountRepository
                 'from_method' => $account->fromMethod(),
                 'follow_back' => $account->followBack(),
                 'following_rating' => $account->followingRating(),
+                'gender' => $account->gender(),
                 'following_requested_at' => !is_null($account->followingRequestedAt())
                     ? $account->followingRequestedAt()->format('Y-m-d H:i:s')
                     : null,
@@ -81,7 +84,6 @@ class ElasticAccountRepository implements AccountRepository
 
         $document = $this->transformToDocument($account);
 
-//        $this->index->addDocuments([$document]);
         $this->type->addDocuments([$document]);
         $this->index->flush();
         $this->index->refresh();
@@ -126,5 +128,42 @@ class ElasticAccountRepository implements AccountRepository
         } catch (AccountNotFoundException $exception) {
             return;
         }
+    }
+
+    /**
+     * @param int $size
+     * @return array
+     * @throws AccountNotFoundException
+     */
+    public function accountsToFollowOrderedByRating(int $size = 400): array
+    {
+        if ($size > 400) {
+            throw new \InvalidArgumentException('SIZE CAN NOT BE GREATHER THAN 400');
+        }
+        $boolQuery = new BoolQuery();
+        $nullFollowingRequestedAt = new BoolQuery();
+        $existQuery = new Exists('following_requested_at');
+        $nullFollowingRequestedAt->addMustNot($existQuery);
+        $boolQuery->addShould($nullFollowingRequestedAt);
+
+        $elasticaQuery = new Query();
+        $elasticaQuery->addSort(['following_rating' => 'desc']);
+        $elasticaQuery->setSize($size);
+        $elasticaQuery->setQuery($boolQuery);
+
+//        var_dump(json_encode($elasticaQuery->toArray()));
+
+        $result = $this->type->search($elasticaQuery);
+        $documents = $result->getDocuments();
+        if (empty($documents)) {
+            throw new AccountNotFoundException('ACCOUNT NOT FOUND');
+        }
+        $accounts = [];
+
+        foreach ($documents as $document) {
+            $accounts[] = Account::createFromEsDocument($document);
+        }
+
+        return $accounts;
     }
 }
