@@ -6,8 +6,6 @@ namespace App\Following\Infrastructure\Console\Account;
 
 use App\Following\Application\Service\Account\RecollectAccountsFromFollowersRequest;
 use App\Following\Application\Service\Account\RecollectAccountsFromFollowersService;
-use App\Following\Domain\Model\Account\Account;
-use App\Following\Domain\Model\Account\AccountRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -40,23 +38,21 @@ class RecollectAccountsCommand extends Command
         $time = microtime(true);
 
         $this->recollectAccountsService->execute(
-            new RecollectAccountsFromFollowersRequest('adrianet1919')
+            new RecollectAccountsFromFollowersRequest('bcn_is_magic')
         );
 
         $output->writeln('FINISH - ' . strtoupper(self::$defaultName) . ': ' . (string)(microtime(true) - $time));
     }
 
     private $list = [
-        'xopet1969',
-        'thebarcelonist',
-        'zuckerandspice',
-        'nicanorgarcia',
-        'piluro',
-        'seojmi',
-        'stoptheroc',
-        'barcelonacitizen',
-        'neburruben',
-        'bcnfoodieguide',
-        'bcnfacades'
+        'nicanorgarcia',//745
+        'barcelonacitizen',//246
+        'stoptheroc',//153
+        'neburruben',//129
+        'thebarcelonist',//75
+        'seojmi',//65,3
+        'bcnfoodieguide',//48,7
+        'zuckerandspice',//46,9
+        'xopet1969', //16,4
     ];
 }
