@@ -30,12 +30,17 @@ services:
       - '%IG_ACCOUNT%'
       - '%IG_PASSWORD%'
 
+  account_gender:
+    public: true
+    class: App\Following\Infrastructure\Api\Account\GenderizeAccountGenderByNameAdapter
+
   recollect_accounts_service:
     public: true
     class: App\Following\Application\Service\Account\RecollectAccountsFromFollowersService
     arguments:
       - '@account_repository'
       - '@account_provider'
+      - '@account_gender'
 
   recollect_accounts:
     public: true
@@ -44,3 +49,26 @@ services:
       - '@recollect_accounts_service'
     tags:
       - { name: 'console.command', command: 'recollect-accounts' }
+
+  following_adapter:
+    class: App\Following\Infrastructure\Api\Account\InstagramFollowingAdapter
+    public: true
+    arguments:
+      - '%IG_CONFIG%'
+      - 'env(APP_DEBUG)'
+      - 'env(APP_DEBUG)'
+      - '%IG_ACCOUNT%'
+      - '%IG_PASSWORD%'
+
+  follow_accounts_service:
+    public: true
+    class: App\Following\Application\Service\Account\FollowAccountsService
+    arguments:
+      - '@account_repository'
+      - '@following_adapter'
+
+  follow_accounts_command:
+    public: true
+    class: App\Following\Infrastructure\Console\Account\FollowAccountsCommand
+    arguments:
+      - '@follow_accounts_service'

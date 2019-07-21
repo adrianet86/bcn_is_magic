@@ -131,6 +131,7 @@ class Account
             $data['media_count']
         );
         $self->followBack = $data['follow_back'];
+        $self->gender = $data['gender'];
         if (!is_null($data['following_requested_at'])) {
             $self->followingRequestedAt = new \DateTime($data['following_requested_at']);
         }
@@ -278,5 +279,15 @@ class Account
         }
 
         return $rate;
+    }
+
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    public function setFollowingRequestedAt(): void
+    {
+        $this->followingRequestedAt = new \DateTime();
     }
 }
