@@ -21,7 +21,7 @@ class RecollectAccountsCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Get accounts from a other account followers.')
+            ->setDescription('Get accounts from another account followers.')
             ->setHelp('This command stores followers from other account.');
     }
 
@@ -40,7 +40,7 @@ class RecollectAccountsCommand extends Command
         $time = microtime(true);
 
         $this->recollectAccountsService->execute(
-            new RecollectAccountsFromFollowersRequest('bcn_is_magic')
+            new RecollectAccountsFromFollowersRequest('adrianet1919')
         );
 
         $output->writeln('FINISH - ' . strtoupper(self::$defaultName) . ': ' . (string)(microtime(true) - $time));
