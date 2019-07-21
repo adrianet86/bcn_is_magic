@@ -5,6 +5,7 @@ namespace App\Following\Application\Service\Account;
 
 
 use App\Following\Domain\Model\Account\Account;
+use App\Following\Domain\Model\Account\AccountGenderByName;
 use App\Following\Domain\Model\Account\AccountNotFoundException;
 use App\Following\Domain\Model\Account\AccountProvider;
 use App\Following\Domain\Model\Account\AccountRepository;
@@ -12,17 +13,21 @@ use App\Following\Domain\Model\Account\AccountRepository;
 class RecollectAccountsFromFollowersService
 {
     const GAP = 200;
+    const WAIT = 1;
 
     private AccountRepository $accountRepository;
     private AccountProvider $accountProvider;
+    private AccountGenderByName $accountGenderByName;
 
     public function __construct(
         AccountRepository $accountRepository,
-        AccountProvider $accountProvider
+        AccountProvider $accountProvider,
+        AccountGenderByName $accountGenderByName
     )
     {
         $this->accountRepository = $accountRepository;
         $this->accountProvider = $accountProvider;
+        $this->accountGenderByName = $accountGenderByName;
     }
 
     /**
@@ -43,6 +48,10 @@ class RecollectAccountsFromFollowersService
                 /** @var Account $accountToSave */
                 foreach ($accounts as $accountToSave) {
                     try {
+                        sleep(self::WAIT);
+                        $accountToSave->setGender(
+                            $this->accountGenderByName->detectGender($accountToSave->name())
+                        );
                         $accountFromRepository = $this->accountRepository->byUsername($accountToSave->username());
                         $this->updateAccount($accountFromRepository, $accountToSave);
                     } catch (AccountNotFoundException $exception) {
