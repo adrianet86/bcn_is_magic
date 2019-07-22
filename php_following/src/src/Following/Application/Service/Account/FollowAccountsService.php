@@ -10,7 +10,7 @@ use App\Following\Domain\Model\Account\Following;
 
 class FollowAccountsService
 {
-    const WAIT = 2;
+    const WAIT = 5;
 
     private AccountRepository $accountRepository;
     private Following $following;
