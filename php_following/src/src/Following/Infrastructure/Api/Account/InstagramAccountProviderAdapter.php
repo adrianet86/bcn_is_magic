@@ -13,7 +13,7 @@ class InstagramAccountProviderAdapter implements AccountProvider
 {
     const METHOD = 'follower';
     const PAGE_SIZE = 200;
-    const WAIT = 2;
+    const WAIT = 4;
 
     private Instagram $ig;
     private string $username;
