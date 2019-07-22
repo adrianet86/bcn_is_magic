@@ -6,11 +6,12 @@ namespace Unit\Following\Infrastructure\Api\Account;
 
 use App\Following\Domain\Model\Account\Account;
 use App\Following\Infrastructure\Api\Account\InstagramAccountProviderAdapter;
+use App\Following\Infrastructure\Api\Account\GenderizeAccountGenderByNameAdapter;
 use PHPUnit\Framework\TestCase;
 
 class AccountTest extends TestCase
 {
-    public function testCCCC()
+    public function testToDelete()
     {
         $service = new InstagramAccountProviderAdapter(
             [
@@ -28,6 +29,11 @@ class AccountTest extends TestCase
         $page = 2;
 
         //$service->byAccountFollowers($accountUsername, $page);
+
+//        $service = new GenderizeAccountGenderByNameAdapter();
+//
+//        $gender = $service->detectGender('maria');
+//        $this->assertEquals('female', $gender);
     }
 
     public function testRatingIsBadWhenAnyFieldIsGood()
@@ -101,8 +107,8 @@ class AccountTest extends TestCase
             false,
             false,
             false,
-            10,
             5,
+            10,
             'hi',
             0
         );

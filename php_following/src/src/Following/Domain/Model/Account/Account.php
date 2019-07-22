@@ -220,7 +220,7 @@ class Account
     public function followerRatio()
     {
         if ($this->following !== 0 && $this->followers !== 0) {
-            return $this->followers / $this->following;
+            return $this->following / $this->followers;
         }
         return 0;
     }
