@@ -6,3 +6,6 @@ parameters:
     basefolder: '%kernel.project_dir%/var/ig/'
   IG_ACCOUNT: '%env(string:IG_ACCOUNT)%'
   IG_PASSWORD: '%env(string:IG_PASSWORD)%'
+  IG_READ_ACCOUNT: '%env(string:IG_READ_ACCOUNT)%'
+  IG_READ_PASSWORD: '%env(string:IG_READ_PASSWORD)%'
+  FOLLOWER_SIZE: 10

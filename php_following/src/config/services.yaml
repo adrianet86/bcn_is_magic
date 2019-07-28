@@ -27,8 +27,8 @@ services:
       - '%IG_CONFIG%'
       - 'env(APP_DEBUG)'
       - 'env(APP_DEBUG)'
-      - '%IG_ACCOUNT%'
-      - '%IG_PASSWORD%'
+      - '%IG_READ_ACCOUNT%'
+      - '%IG_READ_PASSWORD%'
 
   account_gender:
     public: true
@@ -66,6 +66,7 @@ services:
     arguments:
       - '@account_repository'
       - '@following_adapter'
+      - '%FOLLOWER_SIZE%'
 
   follow_accounts_command:
     public: true

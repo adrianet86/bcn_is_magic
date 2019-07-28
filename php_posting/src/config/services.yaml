@@ -34,7 +34,6 @@ services:
       - '%IMAGES_PATH%'
       - '%REMOVE_IMAGES_ENABLED%'
 
-
   image_storage_aws:
     public: true
     class: App\Posting\Infrastructure\Api\Image\AwsImageStorage
