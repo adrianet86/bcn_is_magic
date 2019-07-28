@@ -13,10 +13,6 @@ class FileTagRepository implements TagRepository
         'barcelona',
         'bcn',
         'barcelonacity',
-        'barcelona_is_magic',
-        'barcelonaismagic',
-        'bcnismagic',
-        'bcn_is_magic',
         'barcelonagram',
     ];
     private $hashTags = [
