@@ -32,7 +32,8 @@ class ElasticAccountRepository implements AccountRepository
             $this->index->create([
                     "settings" => [
                         "number_of_shards" => 3,
-                        "number_of_replicas" => 2
+                        "number_of_replicas" => 2,
+//                        "blocks" => ["read_only_allow_delete" => false]
                     ],
                     "type" => "account"
                 ]

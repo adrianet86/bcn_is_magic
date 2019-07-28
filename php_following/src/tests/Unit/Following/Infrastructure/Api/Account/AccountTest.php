@@ -36,7 +36,7 @@ class AccountTest extends TestCase
 //        $this->assertEquals('female', $gender);
     }
 
-    public function testRatingIsBadWhenAnyFieldIsGood()
+    public function testRatingIsBadWhenAnyFieldIsNotGood()
     {
         $account = Account::create(
             'from',
@@ -53,7 +53,7 @@ class AccountTest extends TestCase
             0
         );
 
-        $this->assertEquals(0, $account->followingRating());
+        $this->assertLessThan(0, $account->followingRating());
     }
 
     public function testWhenAccountIsNotPrivateItHasGoodRating()
@@ -73,7 +73,7 @@ class AccountTest extends TestCase
             0
         );
 
-        $this->assertNotEquals(0, $account->followingRating());
+        $this->assertGreaterThan(0, $account->followingRating());
     }
 
     public function testWhenAccountHasProfilePictureItHasGoodRating()
@@ -86,6 +86,26 @@ class AccountTest extends TestCase
             'name',
             false,
             true,
+            false,
+            0,
+            0,
+            'hi',
+            0
+        );
+
+        $this->assertNotEquals(0, $account->followingRating());
+    }
+
+    public function testWhenAccountHasNotProfilePictureItHasBadRating()
+    {
+        $account = Account::create(
+            'from',
+            'method',
+            'id',
+            'username',
+            'name',
+            false,
+            false,
             false,
             0,
             0,
@@ -113,7 +133,7 @@ class AccountTest extends TestCase
             0
         );
 
-        $this->assertNotEquals(0, $account->followingRating());
+        $this->assertGreaterThan(0, $account->followingRating());
     }
 
 }

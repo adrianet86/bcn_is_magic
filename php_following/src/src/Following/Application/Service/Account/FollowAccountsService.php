@@ -10,32 +10,36 @@ use App\Following\Domain\Model\Account\Following;
 
 class FollowAccountsService
 {
-    const WAIT = 5;
+    const WAIT = 15;
 
     private AccountRepository $accountRepository;
     private Following $following;
+    private int $followerSize;
+
 
     public function __construct(
         AccountRepository $accountRepository,
-        Following $following
+        Following $following,
+        int $followerSize = 400
     )
     {
         $this->accountRepository = $accountRepository;
         $this->following = $following;
+        $this->followerSize = $followerSize;
     }
 
     public function execute($request = null): void
     {
-        $accountsToFollow = $this->accountRepository->accountsToFollowOrderedByRating();
+        $accountsToFollow = $this->accountRepository->accountsToFollowOrderedByRating($this->followerSize);
 
         if (!empty($accountsToFollow)) {
-            /** @var Account $anAccountToFollow */
+            /** @var $anAccountToFollow Account  */
             foreach ($accountsToFollow as $anAccountToFollow) {
-//                echo $anAccountToFollow->name() . ' ' . $anAccountToFollow->followingRating() . "\n";
                 $this->following->followAccount($anAccountToFollow);
                 $this->accountRepository->store($anAccountToFollow);
-                echo "zzzZZZZZzzzzz wait to to give a rest to the api zzzzZZZZZZzzzzzz";
-                sleep(self::WAIT);
+                $wait = self::WAIT + rand(1, 4);
+                echo "zzzZZZZZzzzzz wait $wait seconds to give a rest to the api zzzzZZZZZZzzzzzz\n";
+                sleep($wait);
             }
         }
     }

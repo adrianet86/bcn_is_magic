@@ -10,7 +10,7 @@ use InstagramAPI\Instagram;
 
 class InstagramFollowingAdapter implements Following
 {
-    const WAIT = 2;
+    const WAIT = 5;
 
     private Instagram $ig;
     private string $username;
@@ -36,6 +36,7 @@ class InstagramFollowingAdapter implements Following
     public function followAccount(Account $account): void
     {
         $this->ig->login($this->username, $this->password);
+        sleep(self::WAIT);
         $this->ig->people->follow($account->instagramId());
         $account->setFollowingRequestedAt();
     }
