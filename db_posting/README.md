@@ -2,7 +2,8 @@
 ##### Start
 
     docker pull sqitch/sqitch
-    docker run --rm -ti -v ~/projects/devops/postgres/src:/app -w /app sqitch/sqitch --engine pg init devops
+    # From /db_posting/src
+    docker run --rm -ti -v $PWD:/app -w /app sqitch/sqitch --engine pg init db_posting
 
 ##### Deploy 
     # From /db_posting/src
