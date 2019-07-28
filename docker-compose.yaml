@@ -47,28 +47,57 @@ services:
     - ./db_posting/data:${DB_POSTING_PGDATA}
 #    - postgres_data:${DB_POSTING_PGDATA}
     ports:
-    - 5432:5432
+    - 5431:5432
     networks:
     - bcnismagic_internal
     - bcnismagic_external
 
-  search_following:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.0
-    container_name: ${SEARCH_FOLLOWING_CONTAINER}
+  db_following:
+    image: postgres:11.4-alpine
+    container_name: ${DB_FOLLOWING_CONTAINER}
+#    restart: always
     environment:
-      - discovery.type=single-node
-#    ulimits:
-#      memlock:
-#        soft: -1
-#        hard: -1
+      POSTGRES_DB: ${DB_FOLLOWING_DB}
+      POSTGRES_USER: ${DB_FOLLOWING_USER}
+      POSTGRES_PASSWORD: ${DB_FOLLOWING_PASSWORD}
+      PGDATA: ${DB_FOLLOWING_PGDATA}
     volumes:
-      - ./search_following/data:${SEARCH_FOLLOWING_DATA}
-#      - elasticsearch_data:${SEARCH_FOLLOWING_DATA}
+      - ./db_following/data:${DB_FOLLOWING_PGDATA}
     ports:
-      - 9200:9200
+      - 5432:5432
     networks:
       - bcnismagic_internal
       - bcnismagic_external
+
+  metabase:
+    image: metabase/metabase
+    container_name: metabase
+    environment:
+      MB_DB_FILE: '/metabase.db'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./metabase/data/metabase.db:/metabase.db
+    networks:
+      - bcnismagic_internal
+
+#  search_following:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.0
+#    container_name: ${SEARCH_FOLLOWING_CONTAINER}
+#    environment:
+#      - discovery.type=single-node
+##    ulimits:
+##      memlock:
+##        soft: -1
+##        hard: -1
+#    volumes:
+#      - ./search_following/data:${SEARCH_FOLLOWING_DATA}
+##      - elasticsearch_data:${SEARCH_FOLLOWING_DATA}
+#    ports:
+#      - 9200:9200
+#    networks:
+#      - bcnismagic_internal
+#      - bcnismagic_external
 
 #volumes:
 #  elasticsearch_data:

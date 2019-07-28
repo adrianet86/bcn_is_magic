@@ -4,6 +4,10 @@
 db_posting/data
 db_posting/.idea
 
+db_following/data
+db_following/data
+db_following/.idea/
+
 php_posting/.idea
 php_posting/src/var/
 php_posting/src/vendor
@@ -22,6 +26,9 @@ php_following/src/.env.prod
 php_following/src/.env.local
 php_following/src/.env.local.php
 php_following/src/.env.*.local
+
+metabase/data
+!metabase/data/.gitignore
 
 search_following/data
 !search_following/data/.gitignore
