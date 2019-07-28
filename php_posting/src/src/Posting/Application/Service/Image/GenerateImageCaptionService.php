@@ -39,6 +39,10 @@ class GenerateImageCaptionService
 
         $image->generateCaption($caption, $tags);
 
+        if (empty($image->caption())) {
+            throw new \Exception('NO CAPTION');
+        }
+
         $this->imageRepository->save($image);
     }
 }
