@@ -265,17 +265,28 @@ class Account
     public function followingRating(): float
     {
         $rate = 0;
+        // I do not want any business account.
+        if ($this->isBusiness) {
+            $rate -= 1;
+        }
+        // Only female accounts adds rating coz we do not have enough info to penalize instead.
+        if ($this->gender === 'female') {
+            $rate += 0.1;
+        }
+        // Follower ratio has a multiplier to increase probability, I understand this variable is more important
+        // than others.
+        if ($this->followerRatio() > 1) {
+            $rate += $this->followerRatio() / 10 * 2;
+        }
         if ($this->isPrivate === true) {
             $rate += 0.1;
+        } else {
+            $rate -= 0.1;
         }
         if ($this->hasProfilePicture === true) {
             $rate += 0.1;
-        }
-        if ($this->followerRatio() > 1) {
-            $rate += $this->followerRatio() / 10;
-        }
-        if ($this->gender === 'female') {
-            $rate += 0.1;
+        } else {
+            $rate -= 0.1;
         }
 
         return $rate;
