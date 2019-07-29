@@ -1,0 +1,80 @@
+App\Following\Domain\Model\Account\Account:
+  type: entity
+  table: accounts
+  id:
+    id:
+      type: guid
+      generator:
+        strategy: NONE
+  fields:
+    createdAt:
+      type: datetime_immutable
+      column: created_at
+      nullable: false
+    fromAccount:
+      type: string
+      column: from_account
+      nullable: false
+    fromMethod:
+      type: string
+      column: from_method
+      nullable: false
+    followingRequestedAt:
+      type: datetime
+      column: following_requested_at
+      nullable: true
+    followBack:
+      type: integer
+      column: follow_back
+      nullable: true
+    updatedAt:
+      type: datetime
+      column: updated_at
+      nullable: true
+    instagramId:
+      type: string
+      column: instagram_id
+      nullable: false
+    username:
+      type: string
+      nullable: false
+      column: username
+    name:
+      type: string
+      nullable: false
+      column: name
+    isPrivate:
+      type: boolean
+      nullable: false
+      column: is_private
+    hasProfilePicture:
+      type: boolean
+      nullable: false
+      column: has_profile_picture
+    isBusiness:
+      type: boolean
+      column: is_business
+      nullable: false
+    followers:
+      type: integer
+      nullable: false
+    following:
+      type: integer
+      column: following
+      nullable: false
+    biography:
+      type: string
+      nullable: true
+      collumn: biography
+    mediaCount:
+      type: integer
+      nullable: false
+    gender:
+      type: string
+      nullable: true
+    followingRating:
+      type: float
+      collumn: following_rating
+      nullable: true
+
+

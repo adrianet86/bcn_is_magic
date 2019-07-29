@@ -1,6 +1,5 @@
 imports:
   - { resource: parameters.yaml }
-  - { resource: packages/fos_elastica.yaml }
 
 services:
   _defaults:
@@ -15,10 +14,9 @@ services:
 
   account_repository:
     public: true
-    class: App\Following\Infrastructure\Search\Account\ElasticAccountRepository
+    class: App\Following\Infrastructure\Persistance\Doctrine\Account\DoctrineAccountRepository
     arguments:
-      - '@fos_elastica.client.default'
-      - 'account'
+      - '@doctrine.orm.entity_manager'
 
   account_provider:
     public: true

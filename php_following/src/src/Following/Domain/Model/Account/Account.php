@@ -4,7 +4,6 @@
 namespace App\Following\Domain\Model\Account;
 
 
-use Elastica\Document;
 use Ramsey\Uuid\Uuid;
 
 class Account
@@ -28,8 +27,9 @@ class Account
     private int $following;
     private string $biography;
     private int $mediaCount;
-
-    private $gender;// TODO: find a way to predict gender
+    private float $followingRating;
+    private float $followerRatio;
+    private ?string $gender;
 
     private function __construct(
         ?string $id,
@@ -75,6 +75,9 @@ class Account
         $this->followBack = null;
         $this->followingRequestedAt = null;
         $this->updatedAt = null;
+        $this->gender = null;
+        $this->followerRatio();
+        $this->followingRating = $this->calculateFollowingRating();
     }
 
     public static function create(
@@ -108,38 +111,6 @@ class Account
             $biography,
             $mediaCount
         );
-    }
-
-    public static function createFromEsDocument(Document $document): self
-    {
-        $data = $document->getData();
-
-        $self = new self(
-            $data['id'],
-            new \DateTimeImmutable($data['created_at']),
-            $data['from_account'],
-            $data['from_method'],
-            $data['instagram_id'],
-            $data['username'],
-            $data['name'],
-            $data['is_private'],
-            $data['has_profile_picture'],
-            $data['is_business'],
-            $data['followers'],
-            $data['following'],
-            $data['biography'],
-            $data['media_count']
-        );
-        $self->followBack = $data['follow_back'];
-        $self->gender = $data['gender'];
-        if (!is_null($data['following_requested_at'])) {
-            $self->followingRequestedAt = new \DateTime($data['following_requested_at']);
-        }
-        if (!is_null($data['updated_at'])) {
-            $self->updatedAt = new \DateTime($data['updated_at']);
-        }
-
-        return $self;
     }
 
     public function id(): string
@@ -219,10 +190,11 @@ class Account
 
     public function followerRatio()
     {
+        $this->followerRatio = 0;
         if ($this->following !== 0 && $this->followers !== 0) {
-            return $this->following / $this->followers;
+            $this->followerRatio = $this->following / $this->followers;
         }
-        return 0;
+        return $this->followerRatio;
     }
 
     public function gender()
@@ -262,7 +234,7 @@ class Account
         return $this->updatedAt;
     }
 
-    public function followingRating(): float
+    private function calculateFollowingRating(): float
     {
         $rate = 0;
         // I do not want any business account.
