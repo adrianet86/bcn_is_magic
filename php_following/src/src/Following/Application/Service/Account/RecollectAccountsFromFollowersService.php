@@ -48,10 +48,10 @@ class RecollectAccountsFromFollowersService
                 /** @var Account $accountToSave */
                 foreach ($accounts as $accountToSave) {
                     try {
-                        sleep(self::WAIT);
-                        $accountToSave->setGender(
-                            $this->accountGenderByName->detectGender($accountToSave->name())
-                        );
+//                        sleep(self::WAIT);
+//                        $accountToSave->setGender(
+//                            $this->accountGenderByName->detectGender($accountToSave->name())
+//                        );
                         $accountFromRepository = $this->accountRepository->byUsername($accountToSave->username());
                         $this->updateAccount($accountFromRepository, $accountToSave);
                     } catch (AccountNotFoundException $exception) {
