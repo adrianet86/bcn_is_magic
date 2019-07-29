@@ -76,5 +76,9 @@ App\Following\Domain\Model\Account\Account:
       type: float
       collumn: following_rating
       nullable: true
+    followerRatio:
+      type: float
+      collumn: follower_ratio
+      nullable: true
 
 
