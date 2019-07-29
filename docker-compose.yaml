@@ -81,27 +81,7 @@ services:
     networks:
       - bcnismagic_internal
 
-#  search_following:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.0
-#    container_name: ${SEARCH_FOLLOWING_CONTAINER}
-#    environment:
-#      - discovery.type=single-node
-##    ulimits:
-##      memlock:
-##        soft: -1
-##        hard: -1
-#    volumes:
-#      - ./search_following/data:${SEARCH_FOLLOWING_DATA}
-##      - elasticsearch_data:${SEARCH_FOLLOWING_DATA}
-#    ports:
-#      - 9200:9200
-#    networks:
-#      - bcnismagic_internal
-#      - bcnismagic_external
-
 #volumes:
-#  elasticsearch_data:
-#    driver: local
 #  postgres_data:
 #    driver: local
 
