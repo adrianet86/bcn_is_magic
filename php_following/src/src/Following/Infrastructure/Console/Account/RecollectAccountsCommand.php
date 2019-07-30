@@ -38,7 +38,7 @@ class RecollectAccountsCommand extends Command
         $time = microtime(true);
 
         $this->recollectAccountsService->execute(
-            new RecollectAccountsFromFollowersRequest('xopet1969')
+            new RecollectAccountsFromFollowersRequest('barcelonacitizen')
         );
 
         $output->writeln('FINISH - ' . strtoupper(self::$defaultName) . ': ' . (string)(microtime(true) - $time));
