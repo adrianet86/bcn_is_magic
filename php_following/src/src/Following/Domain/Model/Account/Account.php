@@ -32,8 +32,6 @@ class Account
     private ?string $gender;
 
     private function __construct(
-        ?string $id,
-        ?\DateTimeImmutable $createdAt,
         string $fromAccount,
         string $fromMethod,
         string $instagramId,
@@ -48,17 +46,17 @@ class Account
         int $mediaCount
     )
     {
-        // TODO: find a better way
-        if (is_null($id)) {
-            $this->id = Uuid::uuid4()->toString();
-        } else {
-            $this->id = $id;
-        }
-        if (is_null($createdAt)) {
-            $this->createdAt = new \DateTimeImmutable();
-        } else {
-            $this->createdAt = $createdAt;
-        }
+//        // TODO: find a better way
+//        if (is_null($id)) {
+//            $this->id = Uuid::uuid4()->toString();
+//        } else {
+//            $this->id = $id;
+//        }
+//        if (is_null($createdAt)) {
+//            $this->createdAt = new \DateTimeImmutable();
+//        } else {
+//            $this->createdAt = $createdAt;
+//        }
 
         $this->fromAccount = $fromAccount;
         $this->fromMethod = $fromMethod;
@@ -96,8 +94,6 @@ class Account
     ): self
     {
         return new self(
-            null,
-            null,
             $fromAccount,
             $fromMethod,
             $instagramId,
@@ -247,12 +243,19 @@ class Account
         // Follower ratio has a multiplier to increase probability, I understand this variable is more important
         // than others.
         if ($this->followerRatio() > 1) {
-            $rate += $this->followerRatio() / 10 * 2;
+            $rateFollower = $this->followerRatio();
+            if ($this->followerRatio > 10) {
+                $rateFollower = 10;
+            }
+            if ($this->followers <= 50) {
+                $rateFollower = 1;
+            }
+            $rate += $rateFollower / 10 * 2;
         }
-        if ($this->isPrivate === true) {
-            $rate += 0.1;
+        if ($this->isPrivate) {
+            $rate -= 0.2;
         } else {
-            $rate -= 0.1;
+            $rate += 0.2;
         }
         if ($this->hasProfilePicture === true) {
             $rate += 0.1;
@@ -275,7 +278,15 @@ class Account
 
     public function followingRating(): ?float
     {
-        $this->setFollowerRatio();
         return $this->followingRating;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function followerRatio(): ?float
+    {
+        $this->setFollowerRatio();
+        return $this->followerRatio;
     }
 }
