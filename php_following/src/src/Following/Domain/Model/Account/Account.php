@@ -231,7 +231,7 @@ class Account
             $rate += 0.3;
         }
         // Follower ratio has a multiplier to increase probability, I understand this variable is more important than others
-        if ($this->followerRatio() > 1) {
+        if ($this->followerRatio() > 2) {
             $rateFollower = $this->followerRatio();
             if ($this->followerRatio > 20) {
                 $rateFollower = 20;
