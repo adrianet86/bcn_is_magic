@@ -28,7 +28,7 @@ class Account
     private string $biography;
     private int $mediaCount;
     private float $followingRating;
-    private float $followerRatio;
+    private ?float $followerRatio;
     private ?string $gender;
 
     private function __construct(
@@ -76,7 +76,7 @@ class Account
         $this->followingRequestedAt = null;
         $this->updatedAt = null;
         $this->gender = null;
-        $this->followerRatio();
+        $this->setFollowerRatio();
         $this->followingRating = $this->calculateFollowingRating();
     }
 
@@ -188,13 +188,12 @@ class Account
         return $this->mediaCount;
     }
 
-    public function followerRatio()
+    public function setFollowerRatio()
     {
         $this->followerRatio = 0;
         if ($this->following !== 0 && $this->followers !== 0) {
             $this->followerRatio = $this->following / $this->followers;
         }
-        return $this->followerRatio;
     }
 
     public function gender()
@@ -272,5 +271,11 @@ class Account
     public function setFollowingRequestedAt(): void
     {
         $this->followingRequestedAt = new \DateTime();
+    }
+
+    public function followingRating(): ?float
+    {
+        $this->setFollowerRatio();
+        return $this->followingRating;
     }
 }

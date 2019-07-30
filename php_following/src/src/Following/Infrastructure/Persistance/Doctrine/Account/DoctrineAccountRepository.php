@@ -79,7 +79,7 @@ class DoctrineAccountRepository implements AccountRepository
     {
         $entities = $this->repository->findBy(
             [
-                'followingRequestAt' => null
+                'followingRequestedAt' => null
             ],
             [
                 'followingRating' => 'desc'
