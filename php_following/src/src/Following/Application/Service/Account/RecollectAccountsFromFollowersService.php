@@ -38,9 +38,14 @@ class RecollectAccountsFromFollowersService
     {
         $accountUsername = $request->accountUsername();
 
-        $total = $this->accountProvider->totalByAccountFollowers($accountUsername) + self::GAP;
+        $total = $this->accountProvider->totalByAccountFollowers($accountUsername);
+        $totalFromThisAccount = $this->accountRepository->totalByFromAccount($accountUsername);
+        $page = 1;
+        if ($totalFromThisAccount > 0) {
+            $page = $totalFromThisAccount / self::GAP;;
+        }
 
-        for ($page = 1; ($page * self::GAP) <= $total; $page++) {
+        for ($page; ($page * self::GAP) <= $total; $page++) {
 
             $accounts = $this->accountProvider->byAccountFollowers($accountUsername, $page);
 

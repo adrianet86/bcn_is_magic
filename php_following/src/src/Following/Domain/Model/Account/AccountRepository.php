@@ -24,4 +24,6 @@ interface AccountRepository
      * @return array
      */
     public function accountsToFollowOrderedByRating(int $size = 400): array;
+
+    public function totalByFromAccount(string $accountUsername): int;
 }

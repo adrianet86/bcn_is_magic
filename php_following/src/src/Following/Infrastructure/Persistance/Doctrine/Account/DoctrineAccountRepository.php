@@ -89,4 +89,11 @@ class DoctrineAccountRepository implements AccountRepository
 
         return $entities;
     }
+
+    public function totalByFromAccount(string $accountUsername): int
+    {
+        return $this->repository->count([
+            'fromAccount' => $accountUsername
+        ]);
+    }
 }
