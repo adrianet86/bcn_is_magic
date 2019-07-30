@@ -46,18 +46,8 @@ class Account
         int $mediaCount
     )
     {
-//        // TODO: find a better way
-//        if (is_null($id)) {
-//            $this->id = Uuid::uuid4()->toString();
-//        } else {
-//            $this->id = $id;
-//        }
-//        if (is_null($createdAt)) {
-//            $this->createdAt = new \DateTimeImmutable();
-//        } else {
-//            $this->createdAt = $createdAt;
-//        }
-
+        $this->id = Uuid::uuid4()->toString();
+        $this->createdAt = new \DateTimeImmutable();
         $this->fromAccount = $fromAccount;
         $this->fromMethod = $fromMethod;
         $this->instagramId = $instagramId;
@@ -238,29 +228,30 @@ class Account
         }
         // Only female accounts adds rating coz we do not have enough info to penalize instead.
         if ($this->gender === 'female') {
-            $rate += 0.1;
+            $rate += 0.3;
         }
-        // Follower ratio has a multiplier to increase probability, I understand this variable is more important
-        // than others.
+        // Follower ratio has a multiplier to increase probability, I understand this variable is more important than others
         if ($this->followerRatio() > 1) {
             $rateFollower = $this->followerRatio();
-            if ($this->followerRatio > 10) {
-                $rateFollower = 10;
+            if ($this->followerRatio > 20) {
+                $rateFollower = 20;
             }
             if ($this->followers <= 50) {
                 $rateFollower = 1;
             }
-            $rate += $rateFollower / 10 * 2;
+            $rate += $rateFollower / 10;
+        } else {
+            $rate -= 1;
         }
         if ($this->isPrivate) {
-            $rate -= 0.2;
+            $rate -= 0.3;
         } else {
-            $rate += 0.2;
+            $rate += 0.3;
         }
         if ($this->hasProfilePicture === true) {
-            $rate += 0.1;
+            $rate += 0.3;
         } else {
-            $rate -= 0.1;
+            $rate -= 0.3;
         }
 
         return $rate;
