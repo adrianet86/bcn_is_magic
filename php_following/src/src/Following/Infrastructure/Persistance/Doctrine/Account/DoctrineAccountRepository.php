@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityRepository;
 
 class DoctrineAccountRepository implements AccountRepository
 {
+    private const DATE_FORMAT = 'Y-m-d H:i:s';
+
     private EntityManager $entityManager;
 
     private EntityRepository $repository;
@@ -95,5 +97,18 @@ class DoctrineAccountRepository implements AccountRepository
         return $this->repository->count([
             'fromAccount' => $accountUsername
         ]);
+    }
+
+    public function byFollowingRequestSentBetween(\DateTime $from, \DateTime $to): array
+    {
+        $qb = $this->repository->createQueryBuilder("a");
+        $qb
+            ->where('a.followingRequestedAt BETWEEN :from AND :to')
+            ->setParameter('from', $from->format(self::DATE_FORMAT))
+            ->setParameter('to', $to->format(self::DATE_FORMAT))
+        ;
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
 }
