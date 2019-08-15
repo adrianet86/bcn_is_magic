@@ -71,3 +71,16 @@ services:
     class: App\Following\Infrastructure\Console\Account\FollowAccountsCommand
     arguments:
       - '@follow_accounts_service'
+
+  unfollow_accounts_service:
+    public: true
+    class: App\Following\Application\Service\Account\UnfollowAccountsService
+    arguments:
+      - '@account_repository'
+      - '@following_adapter'
+
+  unfollow_accounts_command:
+    public: true
+    class: App\Following\Infrastructure\Console\Account\UnfollowAccountsCommand
+    arguments:
+      - '@unfollow_accounts_service'
