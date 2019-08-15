@@ -6,13 +6,14 @@
 # Clean images every 5 days at 11:00am
 0 11 */5 * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console clean-images -vvv --env=prod >> /var/log/cron_clean_images.log 2>&1
 
-# Post image every day at 08:45, 14:00, 19:30 and 21:30
-45 8 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1
+# Post image every day at 08:45, 13:00, 19:30 and 21:30
+00 9 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1
 
-0 14 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1
+0 11 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1
 
-30 19 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1
+0 13 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1
 
-30 21 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1
+0 18 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_posting/src:/app -w /app php_posting php bin/console post-image -vvv --env=prod >> /var/log/cron_post_images.log 2>&1
 
-
+# Clear cache
+0 21 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console cache:clear -vvv --env=prod >> /var/log/cron_cache_clear.log 2>&1

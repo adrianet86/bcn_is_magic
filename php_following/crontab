@@ -4,5 +4,14 @@
 0 1 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console recollect-accounts -vvv --env=prod >> /var/log/cron_recollect_accounts.log 2>&1
 
 # Follow accounts every day at 12.00pm
-0 12 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console follow-accounts -vvv --env=prod >> /var/log/cron_follow_accounts.log 2>&1
+0 10 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console follow-accounts -v --env=prod >> /var/log/cron_follow_accounts.log 2>&1
 
+0 12 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console follow-accounts -v --env=prod >> /var/log/cron_follow_accounts.log 2>&1
+
+0 14 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console follow-accounts -v --env=prod >> /var/log/cron_follow_accounts.log 2>&1
+
+# Unfollow accounts every day at 00.00
+0 0 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console unfollow-accounts -v --env=prod >> /var/log/cron_unfollow_accounts.log 2>&1
+
+# Clear cache every day at 21.00
+0 21 * * * sudo docker run --rm -t --network bcnismagic_external -v /home/ubuntu/bcn_is_magic/php_following/src:/app -w /app php_following php bin/console cache:clear -vvv --env=prod >> /var/log/cron_cache_clear.log 2>&1
