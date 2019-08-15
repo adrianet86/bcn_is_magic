@@ -40,4 +40,11 @@ class InstagramFollowingAdapter implements Following
         $this->ig->people->follow($account->instagramId());
         $account->setFollowingRequestedAt();
     }
+
+    public function unfollowAccount(Account $account): void
+    {
+        $this->ig->login($this->username, $this->password);
+        sleep(self::WAIT);
+        $this->ig->people->unfollow($account->instagramId());
+    }
 }
