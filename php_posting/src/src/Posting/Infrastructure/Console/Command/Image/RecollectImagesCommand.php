@@ -20,7 +20,12 @@ class RecollectImagesCommand extends Command
     protected function configure()
     {
         $this
-            ->addArgument('provider', InputArgument::REQUIRED, 'Name of the image provider')
+            ->addArgument(
+                'provider',
+                InputArgument::REQUIRED,
+                'Name of the image provider',
+                'unsplash'
+            )
             ->setDescription('Get images from a provider.')
             ->setHelp('This command download images from providers and store them in our system');
     }
