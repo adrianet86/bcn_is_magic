@@ -39,15 +39,10 @@ class PostImageCommand extends Command
         $output->writeln('START - ' . strtoupper(self::$defaultName) . ': ' . $dt->format('Y-m-d H:i:s'));
         $time = microtime(true);
 
-        $offset = 1;
-        $limit = 1;
-        $images = $this->imageRepository->notPosted($offset, $limit);
-        if (!empty($images)) {
-            $image = $images[0];
-            $this->postImageService->execute(
-                new PostImageRequest($image->id())
-            );
-        }
+        $image = $this->imageRepository->notPostedOrFail();
+        $this->postImageService->execute(
+            new PostImageRequest($image->id())
+        );
 
         $output->writeln('FINISH - ' . strtoupper(self::$defaultName) . ': ' . (string)(microtime(true) - $time));
     }

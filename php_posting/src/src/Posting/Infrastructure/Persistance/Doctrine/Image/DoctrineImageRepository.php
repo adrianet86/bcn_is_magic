@@ -95,4 +95,29 @@ class DoctrineImageRepository implements ImageRepository
             $offset
         );
     }
+
+    public function notPostedOrFail(int $offset = 1, int $limit = 500): Image
+    {
+        $images = $this->notPosted(1, 1);
+        if (empty($images)) {
+            throw new ImageNotFoundException('NO AVAILABLE IMAGES NOT POSTED');
+        }
+
+        $image = $images[0];
+        if (!$image instanceof Image) {
+            throw new ImageNotFoundException('NO AVAILABLE IMAGES NOT POSTED');
+        }
+
+        return $image;
+    }
+
+    public function totalByProvider(string $provider): int
+    {
+        $qb = $this->repository->createQueryBuilder('i');
+        $qb->select('count(i.id)')
+            ->where('i.provider = :provider')
+            ->setParameter('provider', $provider);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

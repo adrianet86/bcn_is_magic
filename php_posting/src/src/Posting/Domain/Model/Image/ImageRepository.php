@@ -33,4 +33,14 @@ interface ImageRepository
      * @return array Image
      */
     public function notPosted(int $offset = 1, int $limit = 500): array;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return Image
+     * @throws ImageNotFoundException
+     */
+    public function notPostedOrFail(int $offset = 1, int $limit = 500): Image;
+
+    public function totalByProvider(string $provider): int;
 }

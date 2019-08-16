@@ -7,6 +7,7 @@ namespace App\Posting\Infrastructure\Console\Command\Image;
 use App\Posting\Application\Service\Image\RecollectImagesByTermRequest;
 use App\Posting\Application\Service\Image\RecollectImagesByTermService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -19,6 +20,7 @@ class RecollectImagesCommand extends Command
     protected function configure()
     {
         $this
+            ->addArgument('provider', InputArgument::REQUIRED, 'Name of the image provider')
             ->setDescription('Get images from a provider.')
             ->setHelp('This command download images from providers and store them in our system');
     }
@@ -37,7 +39,7 @@ class RecollectImagesCommand extends Command
         $time = microtime(true);
 
         $this->recollectImagesByTermService->execute(
-            new RecollectImagesByTermRequest('barcelona')
+            new RecollectImagesByTermRequest('barcelona', $input->getArgument('provider'))
         );
 
         $output->writeln('FINISH - ' . strtoupper(self::$defaultName) . ': ' . (string)(microtime(true) - $time));

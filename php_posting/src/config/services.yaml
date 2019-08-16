@@ -21,6 +21,12 @@ services:
       - '%UNSPLASH_SECRET_KEY%'
       - '%UNSPLASH_APP_NAME%'
 
+  image_provider_pexels:
+    public: true
+    class: App\Posting\Infrastructure\Api\Image\PexelsImageProvider
+    arguments:
+      - '%PEXELS_ACCESS_KEY%'
+
   image_repository:
     public: true
     class: App\Posting\Infrastructure\Persistance\Doctrine\Image\DoctrineImageRepository
@@ -53,12 +59,19 @@ services:
       - '@image_storage_aws'
       - '%env(APP_ENV)%'
 
+  image_provider_factory:
+    public: true
+    class: App\Posting\Domain\Model\Image\ImageProviderFactory
+    arguments:
+      - '@image_provider_unsplash'
+      - '@image_provider_pexels'
+
   images_recollect_by_term_from_unsplash:
     public: true
     class: App\Posting\Application\Service\Image\RecollectImagesByTermService
     arguments:
       - '@image_repository'
-      - '@image_provider_unsplash'
+      - '@image_provider_factory'
       - '@image_storage'
 
   clean_images_service:
