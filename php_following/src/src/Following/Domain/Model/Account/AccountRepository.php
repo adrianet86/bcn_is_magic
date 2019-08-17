@@ -28,4 +28,8 @@ interface AccountRepository
     public function totalByFromAccount(string $accountUsername): int;
 
     public function byFollowingRequestSentBetween(\DateTime $from, \DateTime $to): array;
+
+    public function allNotRequested(int $offset, int $limit): array;
+
+    public function totalNotRequested(): int;
 }

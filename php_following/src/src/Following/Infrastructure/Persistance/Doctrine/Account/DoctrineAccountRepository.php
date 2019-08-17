@@ -105,10 +105,29 @@ class DoctrineAccountRepository implements AccountRepository
         $qb
             ->where('a.followingRequestedAt BETWEEN :from AND :to')
             ->setParameter('from', $from->format(self::DATE_FORMAT))
-            ->setParameter('to', $to->format(self::DATE_FORMAT))
-        ;
+            ->setParameter('to', $to->format(self::DATE_FORMAT));
         $result = $qb->getQuery()->getResult();
 
         return $result;
+    }
+
+    public function allNotRequested(int $offset, int $limit): array
+    {
+        return $this->repository->findBy([
+            'followingRequestedAt' => null
+        ],
+            null,
+            $limit,
+            $offset
+        );
+    }
+
+    public function totalNotRequested(): int
+    {
+        $qb = $this->repository->createQueryBuilder('a');
+        $qb->select('count(a.id)')
+            ->where('a.followingRequestedAt is null');
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

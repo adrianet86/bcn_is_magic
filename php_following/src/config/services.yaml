@@ -84,3 +84,15 @@ services:
     class: App\Following\Infrastructure\Console\Account\UnfollowAccountsCommand
     arguments:
       - '@unfollow_accounts_service'
+
+  calcualte_following_rating_service:
+    public: true
+    class: App\Following\Application\Service\Account\CalculateFollowingRatingService
+    arguments:
+      - '@account_repository'
+
+  calculate_following_rating_command:
+    public: true
+    class: App\Following\Infrastructure\Console\Account\CalculateFollowingRatingCommand
+    arguments:
+      - '@calcualte_following_rating_service'

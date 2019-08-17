@@ -221,6 +221,42 @@ class Account
 
     private function calculateFollowingRating(): float
     {
+        $rate = 1;
+        // I do not want any business account.
+        if ($this->isBusiness) {
+            $rate *= 0;
+        }
+        // Follower ratio has a multiplier to increase probability, I understand this variable is more important than others
+        if ($this->followerRatio() < 3) {
+            $rate *= 0;
+        }
+        if ($this->isPrivate) {
+            $rate *= 0;
+        }
+        if ($this->hasProfilePicture === false) {
+            $rate *= 0;
+        }
+        if ($this->followers <= 250) {
+            $rate *= 0;
+        }
+        if ($this->following <= 500) {
+            $rate *= 0;
+        }
+        if ($this->mediaCount <= 200) {
+            $rate *= 0;
+        }
+
+        return $rate;
+    }
+
+    public function updateFollowingRating(): void
+    {
+        $this->followingRating = $this->calculateFollowingRating();
+        $this->updatedAt = new \DateTime();
+    }
+
+    private function calculateFollowingRatingOld(): float
+    {
         $rate = 0;
         // I do not want any business account.
         if ($this->isBusiness) {
