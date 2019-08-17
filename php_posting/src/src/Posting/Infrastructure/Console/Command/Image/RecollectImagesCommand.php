@@ -22,7 +22,7 @@ class RecollectImagesCommand extends Command
         $this
             ->addArgument(
                 'provider',
-                InputArgument::REQUIRED,
+                InputArgument::OPTIONAL,
                 'Name of the image provider',
                 'unsplash'
             )
