@@ -6,14 +6,20 @@ namespace App\Following\Application\Service\Account;
 
 use App\Following\Domain\Model\Account\Account;
 use App\Following\Domain\Model\Account\AccountRepository;
+use Doctrine\ORM\EntityManager;
 
 class CalculateFollowingRatingService
 {
     private AccountRepository $accountRepository;
+    private EntityManager $entityManager;
 
-    public function __construct(AccountRepository $accountRepository)
+    public function __construct(
+        AccountRepository $accountRepository,
+        EntityManager $entityManager
+    )
     {
         $this->accountRepository = $accountRepository;
+        $this->entityManager = $entityManager;
     }
 
     public function execute($request = null): void
@@ -31,8 +37,9 @@ class CalculateFollowingRatingService
             /** @var Account $account */
             foreach ($accounts as $account) {
                 $account->updateFollowingRating();
-                $this->accountRepository->store($account);
+                $this->entityManager->persist($account);
             }
+            $this->entityManager->flush();
         }
     }
 }

@@ -236,13 +236,13 @@ class Account
         if ($this->hasProfilePicture === false) {
             $rate *= 0;
         }
-        if ($this->followers <= 250) {
+        if ($this->followers <= 150) {
             $rate *= 0;
         }
-        if ($this->following <= 500) {
+        if ($this->following <= 800) {
             $rate *= 0;
         }
-        if ($this->mediaCount <= 200) {
+        if ($this->mediaCount <= 150) {
             $rate *= 0;
         }
 

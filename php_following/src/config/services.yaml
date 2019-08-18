@@ -90,6 +90,7 @@ services:
     class: App\Following\Application\Service\Account\CalculateFollowingRatingService
     arguments:
       - '@account_repository'
+      - '@doctrine.orm.entity_manager'
 
   calculate_following_rating_command:
     public: true
