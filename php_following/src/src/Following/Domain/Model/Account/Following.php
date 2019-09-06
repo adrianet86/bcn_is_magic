@@ -9,4 +9,6 @@ interface Following
     public function followAccount(Account $account): void;
 
     public function unfollowAccount(Account $account): void;
+
+    public function login(): void;
 }

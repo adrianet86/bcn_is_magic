@@ -30,6 +30,8 @@ class UnfollowAccountsService
         $to = new \DateTime('1 day ago');
         $accountsToUnfollow = $this->accountRepository->byFollowingRequestSentBetween($from, $to);
 
+        $this->followingAdapter->login();
+
         foreach ($accountsToUnfollow as $account) {
             $this->unfollow($account);
             sleep(self::WAIT_TIME);

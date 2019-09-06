@@ -33,14 +33,24 @@ class FollowAccountsService
         $accountsToFollow = $this->accountRepository->accountsToFollowOrderedByRating($this->followerSize);
 
         if (!empty($accountsToFollow)) {
+            $this->following->login();
             /** @var $anAccountToFollow Account  */
             foreach ($accountsToFollow as $anAccountToFollow) {
-                $this->following->followAccount($anAccountToFollow);
+                $this->followAccount($anAccountToFollow);
                 $this->accountRepository->store($anAccountToFollow);
                 $wait = self::WAIT + rand(1, 4);
                 echo "zzzZZZZZzzzzz wait $wait seconds to give a rest to the api zzzzZZZZZZzzzzzz\n";
                 sleep($wait);
             }
+        }
+    }
+
+    private function followAccount(Account $account): void
+    {
+        try {
+            $this->following->followAccount($account);
+        } catch (\Exception $exception) {
+
         }
     }
 }

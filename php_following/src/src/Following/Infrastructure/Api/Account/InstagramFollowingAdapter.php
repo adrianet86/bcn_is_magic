@@ -33,9 +33,13 @@ class InstagramFollowingAdapter implements Following
         $this->password = $password;
     }
 
-    public function followAccount(Account $account): void
+    public function login(): void
     {
         $this->ig->login($this->username, $this->password);
+    }
+
+    public function followAccount(Account $account): void
+    {
         sleep(self::WAIT);
         $this->ig->people->follow($account->instagramId());
         $account->setFollowingRequestedAt();
@@ -43,7 +47,6 @@ class InstagramFollowingAdapter implements Following
 
     public function unfollowAccount(Account $account): void
     {
-        $this->ig->login($this->username, $this->password);
         sleep(self::WAIT);
         $this->ig->people->unfollow($account->instagramId());
     }
