@@ -4,6 +4,7 @@
 namespace App\Following\Application\Service\Account;
 
 
+use App\Following\Domain\Model\Account\Account;
 use App\Following\Domain\Model\Account\AccountRepository;
 use App\Following\Infrastructure\Api\Account\InstagramFollowingAdapter;
 
@@ -30,8 +31,17 @@ class UnfollowAccountsService
         $accountsToUnfollow = $this->accountRepository->byFollowingRequestSentBetween($from, $to);
 
         foreach ($accountsToUnfollow as $account) {
-            $this->followingAdapter->unfollowAccount($account);
+            $this->unfollow($account);
             sleep(self::WAIT_TIME);
+        }
+    }
+
+    private function unfollow(Account $account): void
+    {
+        try {
+            $this->followingAdapter->unfollowAccount($account);
+        } catch (\Exception $exception) {
+
         }
     }
 }
