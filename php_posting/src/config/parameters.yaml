@@ -15,3 +15,4 @@ parameters:
   AWS_BUCKET: '%env(string:AWS_BUCKET)%'
   AWS_REGION: '%env(string:AWS_REGION)%'
   PEXELS_ACCESS_KEY: '%env(string:PEXELS_SECRET_KEY)%'
+  FLICKR_KEY: '%env(string:FLICKR_KEY)%'

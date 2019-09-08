@@ -27,6 +27,12 @@ services:
     arguments:
       - '%PEXELS_ACCESS_KEY%'
 
+  image_provider_flicker:
+    public: true
+    class: App\Posting\Infrastructure\Api\Image\FlickrImageProvider
+    arguments:
+      - '%FLICKR_KEY%'
+
   image_repository:
     public: true
     class: App\Posting\Infrastructure\Persistance\Doctrine\Image\DoctrineImageRepository
@@ -65,6 +71,7 @@ services:
     arguments:
       - '@image_provider_unsplash'
       - '@image_provider_pexels'
+      - '@image_provider_flicker'
 
   images_recollect_by_term_from_unsplash:
     public: true
