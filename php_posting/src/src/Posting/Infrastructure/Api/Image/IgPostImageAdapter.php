@@ -62,7 +62,9 @@ class IgPostImageAdapter implements PostImage
             }
 
         } catch (\Exception $exception) {
-            throw new UnableToPostImageException('UNABLE TO POST IMAGE: ' . $exception->getMessage());
+            throw new UnableToPostImageException(
+                sprintf('UNABLE TO POST IMAGE ID %s: %s', $image->id(), $exception->getMessage())
+            );
         }
     }
 
