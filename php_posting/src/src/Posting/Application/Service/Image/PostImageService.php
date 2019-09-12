@@ -43,6 +43,7 @@ class PostImageService
             $this->postImage->postImage($image, null);
         } catch (\Exception $exception) {
             // TODO: mark as error
+            $image->posted();
             echo $exception->getMessage();
         }
 
