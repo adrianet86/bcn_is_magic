@@ -81,19 +81,16 @@ class DoctrineImageRepository implements ImageRepository
      */
     public function notPosted(int $offset = 1, int $limit = 500): array
     {
-        return $this->repository->findBy(
-            [
-                'postedAt' => null,
-                'isDiscarded' => false
-            ],
-            [
-                'likes' => 'desc',
-                'views' => 'desc',
-                'downloads' => 'desc'
-            ],
-            $limit,
-            $offset
-        );
+        $qb = $this->repository->createQueryBuilder('i');
+
+        $qb->select()
+            ->where('i.postedAt IS NULL')
+            ->andWhere('i.isDiscarded != false')
+            ->addOrderBy('i.likes', 'DESC')
+            ->addOrderBy('i.views',  'DESC')
+            ->addOrderBy('i.downloads',  'DESC');
+
+        return $qb->getQuery()->execute();
     }
 
     public function notPostedOrFail(int $offset = 1, int $limit = 500): Image

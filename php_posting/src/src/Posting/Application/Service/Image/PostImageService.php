@@ -39,7 +39,12 @@ class PostImageService
 
         $this->generateImageCaptionService->execute(new GenerateImageCaptionRequest($request->imageId()));
 
-        $this->postImage->postImage($image, null);
+        try {
+            $this->postImage->postImage($image, null);
+        } catch (\Exception $exception) {
+            // TODO: mark as error
+            echo $exception->getMessage();
+        }
 
         $this->imageRepository->save($image);
     }
