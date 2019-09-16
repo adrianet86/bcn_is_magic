@@ -85,7 +85,7 @@ class DoctrineImageRepository implements ImageRepository
 
         $qb->select()
             ->where('i.postedAt IS NULL')
-            ->andWhere('i.isDiscarded != false')
+            ->andWhere('i.isDiscarded != true')
             ->addOrderBy('i.likes', 'DESC')
             ->addOrderBy('i.views',  'DESC')
             ->addOrderBy('i.downloads',  'DESC');
