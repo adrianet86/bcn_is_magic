@@ -101,6 +101,7 @@ class FileTagRepository implements TagRepository
         'parc guell',
         'parc güell',
         'park güell',
+        'barcelona'
     ];
 
     /**
